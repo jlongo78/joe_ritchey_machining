@@ -7,76 +7,19 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
-    env:
-      NODE_OPTIONS: "--max-old-space-size=1024"
-      APP_NAME: precision-engine
-      APP_DIR: /var/www/precision-engine
-
     steps:
       - uses: actions/checkout@v4
 
-      # ============================================
-      # FRONTEND BUILD
-      # ============================================
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install frontend dependencies
+      - name: Install dependencies
         working-directory: ./frontend
         run: npm ci
 
-      - name: Build frontend
+      - name: Build
         working-directory: ./frontend
-        env:
-          VITE_API_URL: /api
-          VITE_APP_NAME: "Precision Engine & Dyno"
         run: npm run build
 
-      # ============================================
-      # BACKEND SETUP
-      # ============================================
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Create app directories
+      - name: Deploy
         run: |
-          mkdir -p ${{ env.APP_DIR }}/frontend
-          mkdir -p ${{ env.APP_DIR }}/backend
-
-      # ============================================
-      # DEPLOY FRONTEND (Static files)
-      # ============================================
-      - name: Deploy frontend
-        run: |
-          rm -rf ${{ env.APP_DIR }}/frontend/*
-          cp -r frontend/dist/* ${{ env.APP_DIR }}/frontend/
-
-      # ============================================
-      # DEPLOY BACKEND
-      # ============================================
-      - name: Deploy backend
-        run: |
-          rm -rf ${{ env.APP_DIR }}/backend/*
-          cp -r backend/* ${{ env.APP_DIR }}/backend/
-
-      - name: Setup Python virtual environment
-        run: |
-          cd ${{ env.APP_DIR }}/backend
-          python3 -m venv venv
-          ./venv/bin/pip install --upgrade pip
-          ./venv/bin/pip install -r requirements.txt
-
-      # ============================================
-      # RESTART SERVICES
-      # ============================================
-      - name: Restart backend service
-        run: sudo systemctl restart precision-engine
-
-      - name: Verify deployment
-        run: |
-          sleep 3
-          curl -f http://localhost:8002/health || echo "Backend health check pending..."
+          mkdir -p /var/www/joeritchey
+          rm -rf /var/www/joeritchey/*
+          cp -r frontend/dist/* /var/www/joeritchey/
