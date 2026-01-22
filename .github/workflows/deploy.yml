@@ -10,16 +10,48 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
+      # Frontend Build & Deploy
+      - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm ci
 
-      - name: Build
+      - name: Build frontend
         working-directory: ./frontend
         run: npm run build
 
-      - name: Deploy
+      - name: Deploy frontend
         run: |
           mkdir -p /var/www/joeritchey
           rm -rf /var/www/joeritchey/*
           cp -r frontend/dist/* /var/www/joeritchey/
+
+      # Backend Deploy
+      - name: Deploy backend
+        run: |
+          mkdir -p /var/www/joeritchey-backend
+          rsync -av --delete --exclude '__pycache__' --exclude '.venv' --exclude 'venv' --exclude '*.pyc' --exclude '.env' backend/ /var/www/joeritchey-backend/
+
+      - name: Install backend dependencies
+        run: |
+          cd /var/www/joeritchey-backend
+          python3 -m venv venv || true
+          ./venv/bin/pip install -r requirements.txt
+
+      - name: Create .env file for backend
+        run: |
+          cd /var/www/joeritchey-backend
+          if [ ! -f .env ]; then
+            cat > .env << 'ENVFILE'
+          DEBUG=false
+          APP_ENV=production
+          SECRET_KEY=change-this-to-a-secure-random-string-at-least-32-chars
+          JWT_SECRET=change-this-to-another-secure-random-string-32-chars
+          DATABASE_URL=sqlite+aiosqlite:///./data/joeritchey.db
+          BACKEND_CORS_ORIGINS=https://joeritchey.thelongo.casa,http://localhost:3000
+          FRONTEND_URL=https://joeritchey.thelongo.casa
+          ENVFILE
+            mkdir -p data
+          fi
+
+      - name: Restart backend service
+        run: sudo systemctl restart joeritchey-api
