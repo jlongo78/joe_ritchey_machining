@@ -41,9 +41,9 @@ const DashboardPage: React.FC = () => {
       setIsLoading(true);
       try {
         const [ordersRes, jobsRes, invoicesRes] = await Promise.all([
-          ordersApi.getOrders({ page: 1, pageSize: 3 }),
-          servicesApi.getJobs({ status: 'in_progress' }),
-          servicesApi.getInvoices({ status: 'pending' }),
+          ordersApi.getOrders(1, 3),
+          servicesApi.getJobs({ status: 'in_progress' as const }),
+          servicesApi.getInvoices(1, 10),
         ]);
 
         setRecentOrders(ordersRes.items);
@@ -56,73 +56,89 @@ const DashboardPage: React.FC = () => {
           pendingInvoices: invoicesRes.total,
           totalSpent: 0, // Would come from API
         });
-      } catch (err) {
+      } catch {
         // Mock data for demo
-        const mockOrders: Order[] = [
+        const mockOrders = [
           {
             id: 1,
             orderNumber: 'ORD-2024-001',
-            status: 'shipped',
-            paymentStatus: 'paid',
+            status: 'shipped' as const,
+            paymentStatus: 'paid' as const,
             subtotal: 1699.99,
-            shippingCost: 0,
+            shippingAmount: 0,
             taxAmount: 140.25,
+            discountAmount: 0,
             total: 1840.24,
             items: [],
+            shippingAddress: { id: 1, userId: 1, addressType: 'shipping' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
+            billingAddress: { id: 2, userId: 1, addressType: 'billing' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
             createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           },
           {
             id: 2,
             orderNumber: 'ORD-2024-002',
-            status: 'processing',
-            paymentStatus: 'paid',
+            status: 'processing' as const,
+            paymentStatus: 'paid' as const,
             subtotal: 899.99,
-            shippingCost: 9.99,
+            shippingAmount: 9.99,
             taxAmount: 75.08,
+            discountAmount: 0,
             total: 985.06,
             items: [],
+            shippingAddress: { id: 1, userId: 1, addressType: 'shipping' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
+            billingAddress: { id: 2, userId: 1, addressType: 'billing' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
             createdAt: new Date(Date.now() - 86400000).toISOString(),
+            updatedAt: new Date(Date.now() - 86400000).toISOString(),
           },
         ];
-        setRecentOrders(mockOrders);
+        setRecentOrders(mockOrders as Order[]);
 
-        const mockJobs: Job[] = [
+        const mockJobs = [
           {
             id: 1,
             jobNumber: 'JOB-2024-001',
-            status: 'in_progress',
+            customerId: 1,
+            title: 'Engine Build - B18C1',
             description: 'Complete engine build - B18C1',
-            estimatedCompletion: new Date(Date.now() + 7 * 86400000).toISOString(),
-            laborTotal: 2500,
-            partsTotal: 1200,
-            total: 3700,
+            status: 'in_progress' as const,
+            priority: 'normal' as const,
+            scheduledEndDate: new Date(Date.now() + 7 * 86400000).toISOString(),
+            actualLaborCost: 2500,
+            actualPartsCost: 1200,
+            actualTotal: 3700,
             tasks: [],
             parts: [],
             labor: [],
             notes: [],
             files: [],
             createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
+            updatedAt: new Date().toISOString(),
           },
         ];
-        setActiveJobs(mockJobs);
+        setActiveJobs(mockJobs as Job[]);
 
-        const mockInvoices: Invoice[] = [
+        const mockInvoices = [
           {
             id: 1,
             invoiceNumber: 'INV-2024-001',
-            status: 'pending',
+            customerId: 1,
+            status: 'sent' as const,
+            invoiceDate: new Date().toISOString(),
+            dueDate: new Date(Date.now() + 14 * 86400000).toISOString(),
             subtotal: 3500,
+            taxRate: 0.0825,
             taxAmount: 288.75,
+            discountAmount: 0,
             total: 3788.75,
             amountPaid: 0,
-            amountDue: 3788.75,
-            dueDate: new Date(Date.now() + 14 * 86400000).toISOString(),
+            balanceDue: 3788.75,
             items: [],
             payments: [],
             createdAt: new Date().toISOString(),
           },
         ];
-        setPendingInvoices(mockInvoices);
+        setPendingInvoices(mockInvoices as Invoice[]);
 
         setStats({
           pendingOrders: 1,
@@ -299,10 +315,10 @@ const DashboardPage: React.FC = () => {
                     <Badge variant={getJobStatusColor(job.status)}>
                       {job.status.replace('_', ' ').charAt(0).toUpperCase() + job.status.replace('_', ' ').slice(1)}
                     </Badge>
-                    {job.estimatedCompletion && (
+                    {job.scheduledEndDate && (
                       <p className="text-xs text-secondary-500 mt-1 flex items-center justify-end gap-1">
                         <Clock className="h-3 w-3" />
-                        Est. {formatDate(job.estimatedCompletion)}
+                        Est. {formatDate(job.scheduledEndDate)}
                       </p>
                     )}
                   </div>
@@ -351,7 +367,7 @@ const DashboardPage: React.FC = () => {
                         {invoice.invoiceNumber}
                       </td>
                       <td className="py-4 font-semibold text-secondary-900">
-                        {formatPrice(invoice.amountDue)}
+                        {formatPrice(invoice.balanceDue)}
                       </td>
                       <td className="py-4">
                         <span className={isOverdue ? 'text-red-600' : 'text-secondary-600'}>

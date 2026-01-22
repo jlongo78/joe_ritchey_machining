@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Trash2, ArrowRight, Tag, Truck } from 'lucide-react';
-import { cn } from '@/utils/cn';
 import { formatPrice } from '@/utils/formatters';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';

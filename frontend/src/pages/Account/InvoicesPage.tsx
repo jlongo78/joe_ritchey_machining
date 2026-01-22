@@ -26,29 +26,29 @@ const InvoicesPage: React.FC = () => {
     const fetchInvoices = async () => {
       setIsLoading(true);
       try {
-        const response = await servicesApi.getInvoices({
-          page: currentPage,
-          pageSize: 10,
-          status: statusFilter || undefined,
-        });
+        const response = await servicesApi.getInvoices(currentPage, 10);
         setInvoices(response.items);
         setTotalPages(response.totalPages);
-      } catch (err) {
+      } catch {
         // Mock data for demo
-        const mockInvoices: Invoice[] = [
+        const mockInvoices = [
           {
             id: 1,
             invoiceNumber: 'INV-2024-001',
-            status: 'pending',
+            customerId: 1,
+            status: 'sent' as const,
+            invoiceDate: new Date().toISOString(),
+            dueDate: new Date(Date.now() + 14 * 86400000).toISOString(),
             subtotal: 3500,
+            taxRate: 0.0825,
             taxAmount: 288.75,
+            discountAmount: 0,
             total: 3788.75,
             amountPaid: 0,
-            amountDue: 3788.75,
-            dueDate: new Date(Date.now() + 14 * 86400000).toISOString(),
+            balanceDue: 3788.75,
             items: [
-              { id: 1, invoiceId: 1, description: 'Engine Build - Labor', quantity: 1, unitPrice: 2500, totalPrice: 2500 },
-              { id: 2, invoiceId: 1, description: 'Parts & Materials', quantity: 1, unitPrice: 1000, totalPrice: 1000 },
+              { id: 1, invoiceId: 1, itemType: 'labor' as const, description: 'Engine Build - Labor', quantity: 1, unitPrice: 2500, totalPrice: 2500, isTaxable: true, displayOrder: 1 },
+              { id: 2, invoiceId: 1, itemType: 'parts' as const, description: 'Parts & Materials', quantity: 1, unitPrice: 1000, totalPrice: 1000, isTaxable: true, displayOrder: 2 },
             ],
             payments: [],
             createdAt: new Date().toISOString(),
@@ -56,34 +56,42 @@ const InvoicesPage: React.FC = () => {
           {
             id: 2,
             invoiceNumber: 'INV-2024-002',
-            status: 'paid',
+            customerId: 1,
+            status: 'paid' as const,
+            invoiceDate: new Date(Date.now() - 15 * 86400000).toISOString(),
+            dueDate: new Date(Date.now() - 7 * 86400000).toISOString(),
             subtotal: 800,
+            taxRate: 0.0825,
             taxAmount: 66,
+            discountAmount: 0,
             total: 866,
             amountPaid: 866,
-            amountDue: 0,
-            dueDate: new Date(Date.now() - 7 * 86400000).toISOString(),
+            balanceDue: 0,
             paidAt: new Date(Date.now() - 10 * 86400000).toISOString(),
             items: [
-              { id: 3, invoiceId: 2, description: 'Cylinder Head Porting', quantity: 1, unitPrice: 800, totalPrice: 800 },
+              { id: 3, invoiceId: 2, itemType: 'labor' as const, description: 'Cylinder Head Porting', quantity: 1, unitPrice: 800, totalPrice: 800, isTaxable: true, displayOrder: 1 },
             ],
             payments: [
-              { id: 1, invoiceId: 2, amount: 866, paymentMethod: 'credit_card', paymentDate: new Date(Date.now() - 10 * 86400000).toISOString(), status: 'completed' },
+              { id: 1, invoiceId: 2, customerId: 1, amount: 866, paymentMethod: 'credit_card' as const, paymentDate: new Date(Date.now() - 10 * 86400000).toISOString(), status: 'completed' as const, createdAt: new Date(Date.now() - 10 * 86400000).toISOString() },
             ],
             createdAt: new Date(Date.now() - 15 * 86400000).toISOString(),
           },
           {
             id: 3,
             invoiceNumber: 'INV-2024-003',
-            status: 'overdue',
+            customerId: 1,
+            status: 'overdue' as const,
+            invoiceDate: new Date(Date.now() - 20 * 86400000).toISOString(),
+            dueDate: new Date(Date.now() - 5 * 86400000).toISOString(),
             subtotal: 1500,
+            taxRate: 0.0825,
             taxAmount: 123.75,
+            discountAmount: 0,
             total: 1623.75,
             amountPaid: 0,
-            amountDue: 1623.75,
-            dueDate: new Date(Date.now() - 5 * 86400000).toISOString(),
+            balanceDue: 1623.75,
             items: [
-              { id: 4, invoiceId: 3, description: 'Block Machining', quantity: 1, unitPrice: 1500, totalPrice: 1500 },
+              { id: 4, invoiceId: 3, itemType: 'labor' as const, description: 'Block Machining', quantity: 1, unitPrice: 1500, totalPrice: 1500, isTaxable: true, displayOrder: 1 },
             ],
             payments: [],
             createdAt: new Date(Date.now() - 20 * 86400000).toISOString(),
@@ -91,23 +99,27 @@ const InvoicesPage: React.FC = () => {
           {
             id: 4,
             invoiceNumber: 'INV-2024-004',
-            status: 'partial',
+            customerId: 1,
+            status: 'partial' as const,
+            invoiceDate: new Date(Date.now() - 10 * 86400000).toISOString(),
+            dueDate: new Date(Date.now() + 7 * 86400000).toISOString(),
             subtotal: 4000,
+            taxRate: 0.0825,
             taxAmount: 330,
+            discountAmount: 0,
             total: 4330,
             amountPaid: 2000,
-            amountDue: 2330,
-            dueDate: new Date(Date.now() + 7 * 86400000).toISOString(),
+            balanceDue: 2330,
             items: [
-              { id: 5, invoiceId: 4, description: 'LS3 Short Block Build', quantity: 1, unitPrice: 4000, totalPrice: 4000 },
+              { id: 5, invoiceId: 4, itemType: 'labor' as const, description: 'LS3 Short Block Build', quantity: 1, unitPrice: 4000, totalPrice: 4000, isTaxable: true, displayOrder: 1 },
             ],
             payments: [
-              { id: 2, invoiceId: 4, amount: 2000, paymentMethod: 'credit_card', paymentDate: new Date(Date.now() - 3 * 86400000).toISOString(), status: 'completed' },
+              { id: 2, invoiceId: 4, customerId: 1, amount: 2000, paymentMethod: 'credit_card' as const, paymentDate: new Date(Date.now() - 3 * 86400000).toISOString(), status: 'completed' as const, createdAt: new Date(Date.now() - 3 * 86400000).toISOString() },
             ],
             createdAt: new Date(Date.now() - 10 * 86400000).toISOString(),
           },
         ];
-        setInvoices(mockInvoices);
+        setInvoices(mockInvoices as Invoice[]);
         setTotalPages(1);
       } finally {
         setIsLoading(false);
@@ -121,7 +133,9 @@ const InvoicesPage: React.FC = () => {
     switch (status) {
       case 'paid':
         return 'success';
-      case 'pending':
+      case 'sent':
+      case 'viewed':
+      case 'draft':
         return 'warning';
       case 'overdue':
         return 'danger';
@@ -138,7 +152,9 @@ const InvoicesPage: React.FC = () => {
         return <CheckCircle className="h-4 w-4" />;
       case 'overdue':
         return <AlertCircle className="h-4 w-4" />;
-      case 'pending':
+      case 'sent':
+      case 'viewed':
+      case 'draft':
       case 'partial':
         return <Clock className="h-4 w-4" />;
       default:
@@ -148,7 +164,7 @@ const InvoicesPage: React.FC = () => {
 
   const statusOptions = [
     { value: '', label: 'All Invoices' },
-    { value: 'pending', label: 'Pending' },
+    { value: 'sent', label: 'Sent' },
     { value: 'partial', label: 'Partially Paid' },
     { value: 'paid', label: 'Paid' },
     { value: 'overdue', label: 'Overdue' },
@@ -157,7 +173,7 @@ const InvoicesPage: React.FC = () => {
   // Calculate totals
   const totalPending = invoices
     .filter((inv) => inv.status !== 'paid')
-    .reduce((sum, inv) => sum + inv.amountDue, 0);
+    .reduce((sum, inv) => sum + inv.balanceDue, 0);
 
   if (isLoading) {
     return (
@@ -252,9 +268,9 @@ const InvoicesPage: React.FC = () => {
                     <div className="text-right">
                       <p className="text-sm text-secondary-500">Total</p>
                       <p className="text-lg font-bold text-secondary-900">{formatPrice(invoice.total)}</p>
-                      {invoice.amountDue > 0 && invoice.amountDue < invoice.total && (
+                      {invoice.balanceDue > 0 && invoice.balanceDue < invoice.total && (
                         <p className="text-sm text-secondary-600">
-                          Remaining: <span className="font-medium text-primary-600">{formatPrice(invoice.amountDue)}</span>
+                          Remaining: <span className="font-medium text-primary-600">{formatPrice(invoice.balanceDue)}</span>
                         </p>
                       )}
                     </div>
@@ -272,7 +288,7 @@ const InvoicesPage: React.FC = () => {
                       >
                         PDF
                       </Button>
-                      {invoice.amountDue > 0 && (
+                      {invoice.balanceDue > 0 && (
                         <Link to={`/account/invoices/${invoice.id}/pay`}>
                           <Button size="sm">
                             Pay

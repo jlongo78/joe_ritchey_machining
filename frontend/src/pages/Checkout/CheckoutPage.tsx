@@ -158,9 +158,9 @@ const CheckoutPage: React.FC = () => {
         try {
           const rates = await ordersApi.getShippingRates({
             postalCode: shippingAddress.postalCode,
+            city: shippingAddress.city || '',
             state: shippingAddress.state,
             country: shippingAddress.country || 'US',
-            cartTotal: cart.subtotal,
           });
           setShippingRates(rates);
           if (rates.length > 0 && !selectedShippingRate) {
@@ -172,24 +172,33 @@ const CheckoutPage: React.FC = () => {
           const mockRates: ShippingRate[] = [
             {
               id: 'standard',
+              carrier: 'USPS',
+              service: 'Standard',
               name: 'Standard Shipping',
               description: '5-7 business days',
+              rate: cart.subtotal >= 99 ? 0 : 9.99,
               price: cart.subtotal >= 99 ? 0 : 9.99,
-              estimatedDays: '5-7',
+              estimatedDays: 6,
             },
             {
               id: 'express',
+              carrier: 'UPS',
+              service: 'Express',
               name: 'Express Shipping',
               description: '2-3 business days',
+              rate: 19.99,
               price: 19.99,
-              estimatedDays: '2-3',
+              estimatedDays: 3,
             },
             {
               id: 'overnight',
+              carrier: 'FedEx',
+              service: 'Overnight',
               name: 'Overnight Shipping',
               description: 'Next business day',
+              rate: 39.99,
               price: 39.99,
-              estimatedDays: '1',
+              estimatedDays: 1,
             },
           ];
           setShippingRates(mockRates);
@@ -218,16 +227,18 @@ const CheckoutPage: React.FC = () => {
     try {
       const checkoutData = {
         email: data.email,
-        shippingAddress: data.shippingAddress as Address,
+        shippingAddress: data.shippingAddress as unknown as Address,
         billingAddress: data.sameAsBilling
-          ? (data.shippingAddress as Address)
-          : (data.billingAddress as Address),
+          ? (data.shippingAddress as unknown as Address)
+          : (data.billingAddress as unknown as Address),
         shippingMethodId: data.shippingMethodId,
         paymentMethodId: 'pm_demo', // In real app, this would come from Stripe
         orderNotes: data.orderNotes,
+        sameAsShipping: data.sameAsBilling,
+        shippingMethod: selectedShippingRate?.name || 'Standard',
       };
 
-      const order = await ordersApi.createOrder(checkoutData);
+      const order = await ordersApi.createOrder(checkoutData as import('@/types').CheckoutData);
       await clearCart();
       success('Order Placed!', `Your order #${order.orderNumber} has been confirmed.`);
       navigate(`/account/orders/${order.id}`, { state: { newOrder: true } });

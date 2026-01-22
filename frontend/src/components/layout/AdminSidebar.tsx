@@ -178,11 +178,11 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, onToggle }) => {
                     {item.href && (
                       <NavLink
                         to={item.href}
-                        className={({ isActive: navActive }) =>
+                        className={() =>
                           cn(
                             'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                             collapsed && 'justify-center px-2',
-                            isActive(item.href)
+                            isActive(item.href || '')
                               ? 'bg-electric-500/10 text-electric-400 border border-electric-500/20'
                               : 'text-chrome-400 hover:bg-admin-bg-hover hover:text-white'
                           )

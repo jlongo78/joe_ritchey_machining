@@ -28,7 +28,7 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 type PasswordFormData = z.infer<typeof passwordSchema>;
 
 const SettingsPage: React.FC = () => {
-  const { user, refreshUser } = useAuth();
+  const { user, updateUser } = useAuth();
   const { success, error } = useToast();
   const [activeTab, setActiveTab] = useState<'profile' | 'password' | 'addresses' | 'notifications'>('profile');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,7 +60,7 @@ const SettingsPage: React.FC = () => {
     setIsSubmitting(true);
     try {
       await authApi.updateProfile(data);
-      await refreshUser();
+      await updateUser(data);
       success('Profile Updated', 'Your profile has been updated successfully.');
     } catch (err) {
       // Demo: simulate success

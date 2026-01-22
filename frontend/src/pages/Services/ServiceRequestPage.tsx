@@ -13,7 +13,6 @@ import {
   CheckCircle,
   Info,
 } from 'lucide-react';
-import { cn } from '@/utils/cn';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
 import { servicesApi } from '@/services/api';
@@ -47,8 +46,8 @@ type ServiceRequestFormData = z.infer<typeof serviceRequestSchema>;
 const ServiceRequestPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { user, isAuthenticated } = useAuth();
-  const { success, error } = useToast();
+  const { isAuthenticated } = useAuth();
+  const { success } = useToast();
 
   const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
   const [vehicles, setVehicles] = useState<CustomerVehicle[]>([]);
@@ -88,7 +87,7 @@ const ServiceRequestPage: React.FC = () => {
       try {
         const [typesRes, vehiclesRes] = await Promise.all([
           servicesApi.getServiceTypes(),
-          isAuthenticated ? servicesApi.getCustomerVehicles() : Promise.resolve([]),
+          isAuthenticated ? servicesApi.getVehicles() : Promise.resolve([]),
         ]);
         setServiceTypes(typesRes);
         setVehicles(vehiclesRes);
@@ -96,29 +95,29 @@ const ServiceRequestPage: React.FC = () => {
         // Set preselected service if provided
         if (preselectedService && typesRes.length > 0) {
           const matchingService = typesRes.find(
-            (s) => s.slug === preselectedService || s.name.toLowerCase().includes(preselectedService.replace('-', ' '))
+            (service: ServiceType) => service.name.toLowerCase().includes(preselectedService.replace('-', ' '))
           );
           if (matchingService) {
             setValue('items.0.serviceTypeId', matchingService.id);
           }
         }
-      } catch (err) {
+      } catch {
         // Mock data for demo
         const mockServiceTypes: ServiceType[] = [
-          { id: 1, name: 'Engine Building', slug: 'engine-building', description: 'Complete engine assembly', basePrice: 2500, estimatedHours: 40, isActive: true },
-          { id: 2, name: 'Cylinder Head Porting', slug: 'cylinder-head-porting', description: 'Professional head porting', basePrice: 800, estimatedHours: 16, isActive: true },
-          { id: 3, name: 'Block Machining', slug: 'block-machining', description: 'Precision block work', basePrice: 600, estimatedHours: 8, isActive: true },
-          { id: 4, name: 'Boring & Honing', slug: 'boring-honing', description: 'Cylinder boring and honing', basePrice: 300, estimatedHours: 4, isActive: true },
-          { id: 5, name: 'Deck Surfacing', slug: 'deck-surfacing', description: 'Block deck resurfacing', basePrice: 150, estimatedHours: 2, isActive: true },
-          { id: 6, name: 'Dyno Tuning', slug: 'dyno-tuning', description: 'Professional dyno tuning', basePrice: 500, estimatedHours: 4, isActive: true },
-          { id: 7, name: 'Valve Job', slug: 'valve-job', description: 'Valve seat machining', basePrice: 400, estimatedHours: 6, isActive: true },
-          { id: 8, name: 'Balancing', slug: 'balancing', description: 'Rotating assembly balance', basePrice: 350, estimatedHours: 4, isActive: true },
+          { id: 1, name: 'Engine Building', category: 'machining', description: 'Complete engine assembly', basePrice: 2500, estimatedHours: 40, isActive: true, displayOrder: 1 },
+          { id: 2, name: 'Cylinder Head Porting', category: 'machining', description: 'Professional head porting', basePrice: 800, estimatedHours: 16, isActive: true, displayOrder: 2 },
+          { id: 3, name: 'Block Machining', category: 'machining', description: 'Precision block work', basePrice: 600, estimatedHours: 8, isActive: true, displayOrder: 3 },
+          { id: 4, name: 'Boring & Honing', category: 'machining', description: 'Cylinder boring and honing', basePrice: 300, estimatedHours: 4, isActive: true, displayOrder: 4 },
+          { id: 5, name: 'Deck Surfacing', category: 'machining', description: 'Block deck resurfacing', basePrice: 150, estimatedHours: 2, isActive: true, displayOrder: 5 },
+          { id: 6, name: 'Dyno Tuning', category: 'dyno', description: 'Professional dyno tuning', basePrice: 500, estimatedHours: 4, isActive: true, displayOrder: 6 },
+          { id: 7, name: 'Valve Job', category: 'machining', description: 'Valve seat machining', basePrice: 400, estimatedHours: 6, isActive: true, displayOrder: 7 },
+          { id: 8, name: 'Balancing', category: 'machining', description: 'Rotating assembly balance', basePrice: 350, estimatedHours: 4, isActive: true, displayOrder: 8 },
         ];
         setServiceTypes(mockServiceTypes);
 
         if (preselectedService) {
           const matchingService = mockServiceTypes.find(
-            (s) => s.slug === preselectedService || s.name.toLowerCase().includes(preselectedService.replace('-', ' '))
+            (service) => service.name.toLowerCase().includes(preselectedService.replace('-', ' '))
           );
           if (matchingService) {
             setValue('items.0.serviceTypeId', matchingService.id);
@@ -154,12 +153,14 @@ const ServiceRequestPage: React.FC = () => {
       });
 
       const result = await servicesApi.createServiceRequest({
+        title: 'Service Request',
         vehicleId: data.useExistingVehicle ? data.vehicleId : undefined,
-        vehicle: !data.useExistingVehicle ? data.newVehicle : undefined,
-        items: data.items,
+        items: data.items.map(item => ({
+          ...item,
+          description: item.description || '',
+        })),
         description: data.description,
-        preferredContactMethod: data.preferredContactMethod,
-        urgency: data.urgency,
+        customerNotes: data.description,
       });
 
       success('Request Submitted!', 'We will review your request and get back to you within 24-48 hours.');
@@ -180,7 +181,7 @@ const ServiceRequestPage: React.FC = () => {
 
   const vehicleOptions = vehicles.map((v) => ({
     value: v.id.toString(),
-    label: `${v.year} ${v.make} ${v.model}${v.nickname ? ` (${v.nickname})` : ''}`,
+    label: `${v.year} ${v.make} ${v.model}${v.notes ? ` (${v.notes})` : ''}`,
   }));
 
   if (isLoading) {
@@ -395,10 +396,10 @@ const ServiceRequestPage: React.FC = () => {
                     id="file-upload"
                     accept="image/*,.pdf,.doc,.docx"
                   />
-                  <label htmlFor="file-upload">
-                    <Button type="button" variant="outline" size="sm" as="span">
+                  <label htmlFor="file-upload" className="cursor-pointer">
+                    <span className="inline-flex items-center justify-center px-4 py-2 border border-secondary-300 rounded-lg text-sm font-medium text-secondary-700 bg-white hover:bg-secondary-50 transition-colors">
                       Browse Files
-                    </Button>
+                    </span>
                   </label>
                 </div>
 

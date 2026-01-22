@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Car, Plus, Edit, Trash2, MoreVertical } from 'lucide-react';
+import { Car, Plus, Edit, Trash2 } from 'lucide-react';
 import { useToast } from '@/context/ToastContext';
 import { servicesApi } from '@/services/api';
 import { Card, Button, Input, Modal, EmptyState } from '@/components/common';
 import type { CustomerVehicle } from '@/types';
 
 const VehiclesPage: React.FC = () => {
-  const { success, error } = useToast();
+  const { success } = useToast();
   const [vehicles, setVehicles] = useState<CustomerVehicle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +19,6 @@ const VehiclesPage: React.FC = () => {
     model: '',
     engine: '',
     vin: '',
-    nickname: '',
     notes: '',
   });
 
@@ -30,31 +29,32 @@ const VehiclesPage: React.FC = () => {
   const fetchVehicles = async () => {
     setIsLoading(true);
     try {
-      const data = await servicesApi.getCustomerVehicles();
+      const data = await servicesApi.getVehicles();
       setVehicles(data);
-    } catch (err) {
+    } catch {
       // Mock data for demo
       const mockVehicles: CustomerVehicle[] = [
         {
           id: 1,
           customerId: 1,
-          year: '1995',
+          year: 1995,
           make: 'Honda',
           model: 'Civic',
           engine: 'B18C1',
           vin: 'JHMEG8557SS123456',
-          nickname: 'Track Car',
-          notes: 'Full race build',
+          notes: 'Track Car - Full race build',
+          isActive: true,
         },
         {
           id: 2,
           customerId: 1,
-          year: '2006',
+          year: 2006,
           make: 'Chevrolet',
           model: 'Corvette',
           engine: 'LS3',
           vin: '1G1YY22G065123456',
-          nickname: 'Weekend Warrior',
+          notes: 'Weekend Warrior',
+          isActive: true,
         },
       ];
       setVehicles(mockVehicles);
@@ -67,12 +67,11 @@ const VehiclesPage: React.FC = () => {
     if (vehicle) {
       setEditingVehicle(vehicle);
       setFormData({
-        year: vehicle.year || '',
+        year: vehicle.year?.toString() || '',
         make: vehicle.make || '',
         model: vehicle.model || '',
         engine: vehicle.engine || '',
         vin: vehicle.vin || '',
-        nickname: vehicle.nickname || '',
         notes: vehicle.notes || '',
       });
     } else {
@@ -83,7 +82,6 @@ const VehiclesPage: React.FC = () => {
         model: '',
         engine: '',
         vin: '',
-        nickname: '',
         notes: '',
       });
     }
@@ -99,23 +97,33 @@ const VehiclesPage: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const vehicleData = {
+      year: formData.year ? parseInt(formData.year, 10) : undefined,
+      make: formData.make,
+      model: formData.model,
+      engine: formData.engine || undefined,
+      vin: formData.vin || undefined,
+      notes: formData.notes || undefined,
+      isActive: true,
+    };
+
     try {
       if (editingVehicle) {
-        await servicesApi.updateVehicle(editingVehicle.id, formData);
+        await servicesApi.updateVehicle(editingVehicle.id, vehicleData);
         success('Vehicle Updated', 'Your vehicle has been updated successfully.');
       } else {
-        await servicesApi.createVehicle(formData);
+        await servicesApi.addVehicle(vehicleData);
         success('Vehicle Added', 'Your vehicle has been added successfully.');
       }
       handleCloseModal();
       fetchVehicles();
-    } catch (err) {
+    } catch {
       // Demo: simulate success
       if (editingVehicle) {
         setVehicles((prev) =>
           prev.map((v) =>
             v.id === editingVehicle.id
-              ? { ...v, ...formData }
+              ? { ...v, ...vehicleData }
               : v
           )
         );
@@ -124,7 +132,13 @@ const VehiclesPage: React.FC = () => {
         const newVehicle: CustomerVehicle = {
           id: Date.now(),
           customerId: 1,
-          ...formData,
+          year: vehicleData.year,
+          make: vehicleData.make,
+          model: vehicleData.model,
+          engine: vehicleData.engine,
+          vin: vehicleData.vin,
+          notes: vehicleData.notes,
+          isActive: true,
         };
         setVehicles((prev) => [...prev, newVehicle]);
         success('Vehicle Added', 'Your vehicle has been added successfully.');
@@ -142,7 +156,7 @@ const VehiclesPage: React.FC = () => {
       await servicesApi.deleteVehicle(vehicleId);
       success('Vehicle Deleted', 'Your vehicle has been removed.');
       fetchVehicles();
-    } catch (err) {
+    } catch {
       // Demo: simulate success
       setVehicles((prev) => prev.filter((v) => v.id !== vehicleId));
       success('Vehicle Deleted', 'Your vehicle has been removed.');
@@ -184,9 +198,6 @@ const VehiclesPage: React.FC = () => {
                     <h3 className="font-semibold text-secondary-900">
                       {vehicle.year} {vehicle.make} {vehicle.model}
                     </h3>
-                    {vehicle.nickname && (
-                      <p className="text-sm text-primary-600 font-medium">{vehicle.nickname}</p>
-                    )}
                     {vehicle.engine && (
                       <p className="text-sm text-secondary-500 mt-1">Engine: {vehicle.engine}</p>
                     )}
@@ -271,12 +282,6 @@ const VehiclesPage: React.FC = () => {
             value={formData.vin}
             onChange={(e) => setFormData({ ...formData, vin: e.target.value })}
             placeholder="Vehicle Identification Number"
-          />
-          <Input
-            label="Nickname (Optional)"
-            value={formData.nickname}
-            onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
-            placeholder="e.g., Track Car, Daily Driver"
           />
           <div>
             <label className="block text-sm font-medium text-secondary-700 mb-1">

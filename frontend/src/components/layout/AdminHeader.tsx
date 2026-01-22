@@ -10,7 +10,6 @@ import {
   Settings,
   ChevronDown,
   Menu,
-  X,
   Plus,
 } from 'lucide-react';
 

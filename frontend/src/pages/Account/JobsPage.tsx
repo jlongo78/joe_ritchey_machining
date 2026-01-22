@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Wrench, Clock, Search, Eye, FileText, CheckCircle } from 'lucide-react';
+import { Wrench, Clock, Search, Eye, CheckCircle } from 'lucide-react';
 import { formatPrice, formatDate } from '@/utils/formatters';
 import { servicesApi } from '@/services/api';
 import { Card, Badge, Button, Input, Select, Pagination, EmptyState } from '@/components/common';
@@ -21,69 +21,81 @@ const JobsPage: React.FC = () => {
         const response = await servicesApi.getJobs({
           page: currentPage,
           pageSize: 10,
-          status: statusFilter || undefined,
+          status: (statusFilter || undefined) as import('@/types').JobStatus | undefined,
         });
         setJobs(response.items);
         setTotalPages(response.totalPages);
-      } catch (err) {
+      } catch {
         // Mock data for demo
-        const mockJobs: Job[] = [
+        const mockJobs = [
           {
             id: 1,
             jobNumber: 'JOB-2024-001',
-            status: 'in_progress',
+            customerId: 1,
+            title: 'Engine Build - B18C1',
             description: 'Complete engine build - B18C1 with Wiseco pistons, Eagle rods',
-            estimatedCompletion: new Date(Date.now() + 7 * 86400000).toISOString(),
-            laborTotal: 2500,
-            partsTotal: 1200,
-            total: 3700,
+            status: 'in_progress' as const,
+            priority: 'normal' as const,
+            scheduledEndDate: new Date(Date.now() + 7 * 86400000).toISOString(),
+            actualLaborCost: 2500,
+            actualPartsCost: 1200,
+            actualTotal: 3700,
             tasks: [
-              { id: 1, jobId: 1, name: 'Disassembly & inspection', status: 'completed', displayOrder: 1 },
-              { id: 2, jobId: 1, name: 'Block machining', status: 'completed', displayOrder: 2 },
-              { id: 3, jobId: 1, name: 'Head porting', status: 'in_progress', displayOrder: 3 },
-              { id: 4, jobId: 1, name: 'Assembly', status: 'pending', displayOrder: 4 },
-              { id: 5, jobId: 1, name: 'Dyno tuning', status: 'pending', displayOrder: 5 },
+              { id: 1, jobId: 1, title: 'Disassembly & inspection', status: 'completed' as const, actualHours: 2, displayOrder: 1 },
+              { id: 2, jobId: 1, title: 'Block machining', status: 'completed' as const, actualHours: 4, displayOrder: 2 },
+              { id: 3, jobId: 1, title: 'Head porting', status: 'in_progress' as const, actualHours: 2, displayOrder: 3 },
+              { id: 4, jobId: 1, title: 'Assembly', status: 'pending' as const, actualHours: 0, displayOrder: 4 },
+              { id: 5, jobId: 1, title: 'Dyno tuning', status: 'pending' as const, actualHours: 0, displayOrder: 5 },
             ],
             parts: [],
             labor: [],
             notes: [],
             files: [],
             createdAt: new Date(Date.now() - 10 * 86400000).toISOString(),
+            updatedAt: new Date().toISOString(),
           },
           {
             id: 2,
             jobNumber: 'JOB-2024-002',
-            status: 'completed',
+            customerId: 1,
+            title: 'Cylinder head porting - K20A2',
             description: 'Cylinder head porting - K20A2',
-            completedAt: new Date(Date.now() - 5 * 86400000).toISOString(),
-            laborTotal: 800,
-            partsTotal: 0,
-            total: 800,
+            status: 'completed' as const,
+            priority: 'normal' as const,
+            actualEndDate: new Date(Date.now() - 5 * 86400000).toISOString(),
+            actualLaborCost: 800,
+            actualPartsCost: 0,
+            actualTotal: 800,
             tasks: [],
             parts: [],
             labor: [],
             notes: [],
             files: [],
             createdAt: new Date(Date.now() - 20 * 86400000).toISOString(),
+            updatedAt: new Date(Date.now() - 5 * 86400000).toISOString(),
           },
           {
             id: 3,
             jobNumber: 'JOB-2024-003',
-            status: 'pending_parts',
+            customerId: 1,
+            title: 'LS3 short block build',
             description: 'LS3 short block build',
-            estimatedCompletion: new Date(Date.now() + 14 * 86400000).toISOString(),
-            laborTotal: 1500,
-            partsTotal: 2500,
-            total: 4000,
+            status: 'on_hold' as const,
+            priority: 'normal' as const,
+            scheduledEndDate: new Date(Date.now() + 14 * 86400000).toISOString(),
+            actualLaborCost: 1500,
+            actualPartsCost: 2500,
+            actualTotal: 4000,
             tasks: [],
             parts: [],
             labor: [],
             notes: [],
             files: [],
             createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
+            updatedAt: new Date().toISOString(),
           },
         ];
-        setJobs(mockJobs);
+        setJobs(mockJobs as Job[]);
         setTotalPages(1);
       } finally {
         setIsLoading(false);
@@ -96,12 +108,16 @@ const JobsPage: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
+      case 'picked_up':
         return 'success';
       case 'in_progress':
+      case 'quality_check':
         return 'info';
-      case 'pending_parts':
+      case 'pending':
+      case 'scheduled':
         return 'warning';
       case 'on_hold':
+      case 'cancelled':
         return 'danger';
       default:
         return 'secondary';
@@ -115,8 +131,8 @@ const JobsPage: React.FC = () => {
   const statusOptions = [
     { value: '', label: 'All Jobs' },
     { value: 'pending', label: 'Pending' },
+    { value: 'scheduled', label: 'Scheduled' },
     { value: 'in_progress', label: 'In Progress' },
-    { value: 'pending_parts', label: 'Pending Parts' },
     { value: 'on_hold', label: 'On Hold' },
     { value: 'completed', label: 'Completed' },
   ];
@@ -185,16 +201,16 @@ const JobsPage: React.FC = () => {
                     <p className="text-secondary-700 mb-2">{job.description}</p>
                     <div className="flex flex-wrap gap-4 text-sm text-secondary-500">
                       <span>Started: {formatDate(job.createdAt)}</span>
-                      {job.estimatedCompletion && (
+                      {job.scheduledEndDate && (
                         <span className="flex items-center gap-1">
                           <Clock className="h-4 w-4" />
-                          Est. Completion: {formatDate(job.estimatedCompletion)}
+                          Est. Completion: {formatDate(job.scheduledEndDate)}
                         </span>
                       )}
-                      {job.completedAt && (
+                      {job.actualEndDate && (
                         <span className="flex items-center gap-1 text-green-600">
                           <CheckCircle className="h-4 w-4" />
-                          Completed: {formatDate(job.completedAt)}
+                          Completed: {formatDate(job.actualEndDate)}
                         </span>
                       )}
                     </div>
@@ -221,7 +237,7 @@ const JobsPage: React.FC = () => {
                   <div className="flex flex-col items-end gap-2">
                     <div className="text-right">
                       <p className="text-sm text-secondary-500">Estimated Total</p>
-                      <p className="text-xl font-bold text-primary-600">{formatPrice(job.total)}</p>
+                      <p className="text-xl font-bold text-primary-600">{formatPrice(job.actualTotal)}</p>
                     </div>
                     <Link to={`/account/jobs/${job.id}`}>
                       <Button variant="outline" size="sm" leftIcon={<Eye className="h-4 w-4" />}>
@@ -248,7 +264,7 @@ const JobsPage: React.FC = () => {
                           }`}
                         >
                           {task.status === 'completed' && <CheckCircle className="h-3 w-3" />}
-                          {task.name}
+                          {task.title}
                         </span>
                       ))}
                       {job.tasks.length > 5 && (

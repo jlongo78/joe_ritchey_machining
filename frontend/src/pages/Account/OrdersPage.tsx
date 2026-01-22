@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, Search, Filter, Eye } from 'lucide-react';
+import { Package, Search, Eye } from 'lucide-react';
 import { formatPrice, formatDate } from '@/utils/formatters';
 import { ordersApi } from '@/services/api';
 import { Card, Badge, Button, Input, Select, Pagination, EmptyState } from '@/components/common';
@@ -18,62 +18,69 @@ const OrdersPage: React.FC = () => {
     const fetchOrders = async () => {
       setIsLoading(true);
       try {
-        const response = await ordersApi.getOrders({
-          page: currentPage,
-          pageSize: 10,
-          status: statusFilter || undefined,
-          search: searchQuery || undefined,
-        });
+        const response = await ordersApi.getOrders(currentPage, 10);
         setOrders(response.items);
         setTotalPages(response.totalPages);
-      } catch (err) {
-        // Mock data for demo
-        const mockOrders: Order[] = [
+      } catch {
+        // Mock data for demo - simplified for display purposes
+        const mockOrders = [
           {
             id: 1,
             orderNumber: 'ORD-2024-001',
-            status: 'delivered',
-            paymentStatus: 'paid',
+            status: 'delivered' as const,
+            paymentStatus: 'paid' as const,
             subtotal: 1699.99,
-            shippingCost: 0,
+            shippingAmount: 0,
             taxAmount: 140.25,
+            discountAmount: 0,
             total: 1840.24,
             items: [
-              { id: 1, productId: 1, productName: 'Garrett GTX3582R Gen II Turbocharger', quantity: 1, unitPrice: 1699.99, totalPrice: 1699.99 },
+              { id: 1, orderId: 1, productId: 1, sku: 'GTX3582R', name: 'Garrett GTX3582R Gen II Turbocharger', quantity: 1, unitPrice: 1699.99, totalPrice: 1699.99, status: 'delivered' },
             ],
+            shippingAddress: { id: 1, userId: 1, addressType: 'shipping' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
+            billingAddress: { id: 2, userId: 1, addressType: 'billing' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
             createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           },
           {
             id: 2,
             orderNumber: 'ORD-2024-002',
-            status: 'shipped',
-            paymentStatus: 'paid',
+            status: 'shipped' as const,
+            paymentStatus: 'paid' as const,
             subtotal: 899.99,
-            shippingCost: 9.99,
+            shippingAmount: 9.99,
             taxAmount: 75.08,
+            discountAmount: 0,
             total: 985.06,
             items: [
-              { id: 2, productId: 2, productName: 'Skunk2 Ultra Race Intake Manifold', quantity: 1, unitPrice: 899.99, totalPrice: 899.99 },
+              { id: 2, orderId: 2, productId: 2, sku: 'SKUNK2-IM', name: 'Skunk2 Ultra Race Intake Manifold', quantity: 1, unitPrice: 899.99, totalPrice: 899.99, status: 'shipped' },
             ],
+            shippingAddress: { id: 1, userId: 1, addressType: 'shipping' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
+            billingAddress: { id: 2, userId: 1, addressType: 'billing' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
             trackingNumber: '1Z999AA10123456784',
             createdAt: new Date(Date.now() - 2 * 86400000).toISOString(),
+            updatedAt: new Date(Date.now() - 2 * 86400000).toISOString(),
           },
           {
             id: 3,
             orderNumber: 'ORD-2024-003',
-            status: 'processing',
-            paymentStatus: 'paid',
+            status: 'processing' as const,
+            paymentStatus: 'paid' as const,
             subtotal: 1299.99,
-            shippingCost: 0,
+            shippingAmount: 0,
             taxAmount: 107.25,
+            discountAmount: 0,
             total: 1407.24,
             items: [
-              { id: 3, productId: 3, productName: 'Borla S-Type Cat-Back Exhaust System', quantity: 1, unitPrice: 1299.99, totalPrice: 1299.99 },
+              { id: 3, orderId: 3, productId: 3, sku: 'BORLA-CB', name: 'Borla S-Type Cat-Back Exhaust System', quantity: 1, unitPrice: 1299.99, totalPrice: 1299.99, status: 'processing' },
             ],
+            shippingAddress: { id: 1, userId: 1, addressType: 'shipping' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
+            billingAddress: { id: 2, userId: 1, addressType: 'billing' as const, isDefault: true, firstName: 'John', lastName: 'Doe', addressLine1: '123 Main St', city: 'Austin', state: 'TX', postalCode: '78701', country: 'US' },
             createdAt: new Date(Date.now() - 5 * 86400000).toISOString(),
+            updatedAt: new Date(Date.now() - 5 * 86400000).toISOString(),
           },
         ];
-        setOrders(mockOrders);
+        setOrders(mockOrders as Order[]);
         setTotalPages(1);
       } finally {
         setIsLoading(false);
@@ -191,7 +198,7 @@ const OrdersPage: React.FC = () => {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-secondary-900 line-clamp-1">
-                          {item.productName}
+                          {item.name}
                         </p>
                         <p className="text-xs text-secondary-500">Qty: {item.quantity}</p>
                       </div>

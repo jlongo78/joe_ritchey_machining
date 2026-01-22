@@ -663,8 +663,12 @@ export interface CheckoutData {
 }
 
 export interface ShippingRate {
+  id: string;
   carrier: string;
   service: string;
+  name: string;
+  description?: string;
   rate: number;
+  price: number;
   estimatedDays: number;
 }

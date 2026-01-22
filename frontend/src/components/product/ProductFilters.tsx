@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/utils/cn';
-import { ChevronDown, X, Filter } from 'lucide-react';
+import { ChevronDown, Filter } from 'lucide-react';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import type { Category, Brand, ProductFilters as ProductFiltersType } from '@/types';

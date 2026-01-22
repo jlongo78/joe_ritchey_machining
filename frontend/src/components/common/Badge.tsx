@@ -3,7 +3,7 @@ import { cn } from '@/utils/cn';
 
 export interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  variant?: 'default' | 'secondary' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
@@ -14,8 +14,9 @@ const Badge: React.FC<BadgeProps> = ({
   size = 'md',
   className,
 }) => {
-  const variants = {
+  const variants: Record<NonNullable<BadgeProps['variant']>, string> = {
     default: 'bg-secondary-100 text-secondary-800',
+    secondary: 'bg-secondary-100 text-secondary-800',
     primary: 'bg-primary-100 text-primary-800',
     success: 'bg-green-100 text-green-800',
     warning: 'bg-amber-100 text-amber-800',

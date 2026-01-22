@@ -20,57 +20,84 @@ const ServiceRequestsPage: React.FC = () => {
         const response = await servicesApi.getServiceRequests({
           page: currentPage,
           pageSize: 10,
-          status: statusFilter || undefined,
+          status: (statusFilter || undefined) as import('@/types').ServiceRequestStatus | undefined,
         });
         setRequests(response.items);
         setTotalPages(response.totalPages);
-      } catch (err) {
+      } catch {
         // Mock data for demo
-        const mockRequests: ServiceRequest[] = [
+        const mockRequests = [
           {
             id: 1,
             requestNumber: 'REQ-2024-001',
-            status: 'pending',
+            customerId: 1,
+            status: 'pending' as const,
+            priority: 'normal' as const,
+            title: 'Engine Rebuild Request',
             description: 'Complete engine rebuild - B18C1 with forged internals',
+            isFlexibleTiming: true,
             items: [
-              { id: 1, serviceRequestId: 1, serviceTypeId: 1, serviceTypeName: 'Engine Building', description: 'Full build with Wiseco pistons', quantity: 1 },
+              { id: 1, requestId: 1, serviceTypeId: 1, description: 'Full build with Wiseco pistons', quantity: 1 },
             ],
+            files: [],
+            source: 'website' as const,
             createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           },
           {
             id: 2,
             requestNumber: 'REQ-2024-002',
-            status: 'quoted',
+            customerId: 1,
+            status: 'quoted' as const,
+            priority: 'normal' as const,
+            title: 'Cylinder Head Porting',
             description: 'Cylinder head porting for K20A2',
+            isFlexibleTiming: true,
             items: [
-              { id: 2, serviceRequestId: 2, serviceTypeId: 2, serviceTypeName: 'Cylinder Head Porting', quantity: 1 },
+              { id: 2, requestId: 2, serviceTypeId: 2, description: 'Cylinder Head Porting', quantity: 1 },
             ],
+            files: [],
+            source: 'website' as const,
             createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
+            updatedAt: new Date(Date.now() - 3 * 86400000).toISOString(),
           },
           {
             id: 3,
             requestNumber: 'REQ-2024-003',
-            status: 'approved',
+            customerId: 1,
+            status: 'approved' as const,
+            priority: 'high' as const,
+            title: 'Block Machining & Balancing',
             description: 'Block machining and balancing for LS3',
+            isFlexibleTiming: false,
             items: [
-              { id: 3, serviceRequestId: 3, serviceTypeId: 3, serviceTypeName: 'Block Machining', quantity: 1 },
-              { id: 4, serviceRequestId: 3, serviceTypeId: 8, serviceTypeName: 'Balancing', quantity: 1 },
+              { id: 3, requestId: 3, serviceTypeId: 3, description: 'Block Machining', quantity: 1 },
+              { id: 4, requestId: 3, serviceTypeId: 8, description: 'Balancing', quantity: 1 },
             ],
+            files: [],
+            source: 'website' as const,
             createdAt: new Date(Date.now() - 7 * 86400000).toISOString(),
+            updatedAt: new Date(Date.now() - 7 * 86400000).toISOString(),
           },
           {
             id: 4,
             requestNumber: 'REQ-2024-004',
-            status: 'declined',
+            customerId: 1,
+            status: 'declined' as const,
+            priority: 'low' as const,
+            title: 'Turbo Install',
             description: 'Turbo install on engine with unknown condition',
+            isFlexibleTiming: true,
             items: [
-              { id: 5, serviceRequestId: 4, serviceTypeId: 1, serviceTypeName: 'Engine Building', quantity: 1 },
+              { id: 5, requestId: 4, serviceTypeId: 1, description: 'Engine Building', quantity: 1 },
             ],
-            declinedReason: 'Engine condition needs to be inspected first',
+            files: [],
+            source: 'phone' as const,
             createdAt: new Date(Date.now() - 14 * 86400000).toISOString(),
+            updatedAt: new Date(Date.now() - 14 * 86400000).toISOString(),
           },
         ];
-        setRequests(mockRequests);
+        setRequests(mockRequests as ServiceRequest[]);
         setTotalPages(1);
       } finally {
         setIsLoading(false);
@@ -183,20 +210,11 @@ const ServiceRequestsPage: React.FC = () => {
                         key={item.id}
                         className="inline-flex items-center px-2 py-1 bg-secondary-100 text-secondary-700 rounded text-sm"
                       >
-                        {item.serviceTypeName}
+                        {item.description}
                         {item.quantity > 1 && ` (x${item.quantity})`}
                       </span>
                     ))}
                   </div>
-
-                  {/* Declined Reason */}
-                  {request.status === 'declined' && request.declinedReason && (
-                    <div className="mt-3 p-3 bg-red-50 rounded-lg">
-                      <p className="text-sm text-red-700">
-                        <strong>Reason:</strong> {request.declinedReason}
-                      </p>
-                    </div>
-                  )}
                 </div>
 
                 <div className="flex gap-2">
