@@ -1,0 +1,59 @@
+# ============================================
+# PRECISION ENGINE AND DYNO, LLC
+# Backend Dockerfile - Development with Hot Reloading
+# ============================================
+
+FROM python:3.11-slim
+
+# Prevent Python from writing pyc files and buffering stdout/stderr
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+# Install system dependencies including development tools
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    libffi-dev \
+    libpq-dev \
+    curl \
+    sqlite3 \
+    git \
+    vim \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements files
+COPY requirements.txt requirements-dev.txt* ./
+
+# Install Python dependencies including dev dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    if [ -f requirements-dev.txt ]; then pip install --no-cache-dir -r requirements-dev.txt; fi
+
+# Install additional development tools
+RUN pip install --no-cache-dir \
+    pytest \
+    pytest-cov \
+    pytest-asyncio \
+    httpx \
+    black \
+    isort \
+    flake8 \
+    mypy \
+    ipython
+
+# Copy application code (will be overwritten by volume mounts)
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p /app/data /app/uploads /app/logs /app/static
+
+# Expose the application port
+EXPOSE 8000
+
+# Run with uvicorn in reload mode for development
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "/app/app"]

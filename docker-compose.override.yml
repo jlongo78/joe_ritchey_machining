@@ -1,0 +1,186 @@
+# ============================================
+# PRECISION ENGINE AND DYNO, LLC
+# Development Overrides - Hot Reloading Configuration
+# ============================================
+# Usage: docker compose up (automatically uses this file)
+
+services:
+  # ============================================
+  # FRONTEND - Development Mode with Hot Reloading
+  # ============================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: precision-frontend-dev
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:8000/api/v1
+      - REACT_APP_APP_NAME=Precision Engine and Dyno (DEV)
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - WDS_SOCKET_PORT=0
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./frontend/src:/app/src:cached
+      - ./frontend/public:/app/public:cached
+      - ./frontend/package.json:/app/package.json:ro
+      - frontend-node-modules:/app/node_modules
+    stdin_open: true
+    tty: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ============================================
+  # BACKEND - Development Mode with Hot Reloading
+  # ============================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: precision-backend-dev
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app/app
+    environment:
+      - APP_ENV=development
+      - DEBUG=true
+      - DATABASE_URL=sqlite+aiosqlite:///./data/precision_engine_dev.db
+      - SECRET_KEY=dev-secret-key-not-for-production
+      - JWT_SECRET=dev-jwt-secret-not-for-production
+      - JWT_ALGORITHM=HS256
+      - JWT_EXPIRATION_HOURS=72
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:8000,http://127.0.0.1:3000
+      - FRONTEND_URL=http://localhost:3000
+      - PORTAL_URL=http://localhost:3000/portal
+      # Development email - use MailHog
+      - SMTP_HOST=mailhog
+      - SMTP_PORT=1025
+      - SMTP_USER=
+      - SMTP_PASSWORD=
+      - MAIL_FROM_EMAIL=dev@precision-engine.local
+      - MAIL_FROM_NAME=Precision Engine (DEV)
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app:cached
+      - ./backend/alembic:/app/alembic:cached
+      - ./backend/tests:/app/tests:cached
+      - backend-dev-data:/app/data
+      - backend-dev-uploads:/app/uploads
+      - backend-dev-logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ============================================
+  # REDIS - Development Configuration
+  # ============================================
+  redis:
+    container_name: precision-redis-dev
+    ports:
+      - "6379:6379"
+
+  # ============================================
+  # CELERY WORKER - Development Mode
+  # ============================================
+  celery-worker:
+    container_name: precision-celery-worker-dev
+    command: celery -A app.tasks.celery_app worker --loglevel=debug --concurrency=2
+    environment:
+      - APP_ENV=development
+      - DEBUG=true
+      - DATABASE_URL=sqlite+aiosqlite:///./data/precision_engine_dev.db
+      - SECRET_KEY=dev-secret-key-not-for-production
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - SMTP_HOST=mailhog
+      - SMTP_PORT=1025
+      - SMTP_USER=
+      - SMTP_PASSWORD=
+      - MAIL_FROM_EMAIL=dev@precision-engine.local
+      - MAIL_FROM_NAME=Precision Engine (DEV)
+    volumes:
+      - ./backend/app:/app/app:cached
+      - backend-dev-data:/app/data
+      - backend-dev-uploads:/app/uploads
+      - backend-dev-logs:/app/logs
+
+  # ============================================
+  # CELERY BEAT - Development Mode
+  # ============================================
+  celery-beat:
+    container_name: precision-celery-beat-dev
+    command: celery -A app.tasks.celery_app beat --loglevel=debug --pidfile=/tmp/celerybeat.pid
+    environment:
+      - APP_ENV=development
+      - DEBUG=true
+      - CELERY_BROKER_URL=redis://redis:6379/1
+
+  # ============================================
+  # MAILHOG - Development Email Server
+  # ============================================
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: precision-mailhog
+    ports:
+      - "1025:1025"   # SMTP server
+      - "8025:8025"   # Web UI
+    networks:
+      - precision_network
+    restart: unless-stopped
+
+  # ============================================
+  # ADMINER - Database Administration (Optional)
+  # ============================================
+  adminer:
+    image: adminer:latest
+    container_name: precision-adminer
+    ports:
+      - "8080:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=backend
+    networks:
+      - precision_network
+    restart: unless-stopped
+    profiles:
+      - tools
+
+  # ============================================
+  # REDIS COMMANDER - Redis UI (Optional)
+  # ============================================
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: precision-redis-commander
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+    networks:
+      - precision_network
+    restart: unless-stopped
+    profiles:
+      - tools
+
+# ============================================
+# DEVELOPMENT VOLUMES
+# ============================================
+volumes:
+  frontend-node-modules:
+    driver: local
+  backend-dev-data:
+    driver: local
+  backend-dev-uploads:
+    driver: local
+  backend-dev-logs:
+    driver: local

@@ -1,0 +1,292 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Wrench, Clock, Search, Eye, FileText, CheckCircle } from 'lucide-react';
+import { formatPrice, formatDate } from '@/utils/formatters';
+import { servicesApi } from '@/services/api';
+import { Card, Badge, Button, Input, Select, Pagination, EmptyState } from '@/components/common';
+import type { Job } from '@/types';
+
+const JobsPage: React.FC = () => {
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      setIsLoading(true);
+      try {
+        const response = await servicesApi.getJobs({
+          page: currentPage,
+          pageSize: 10,
+          status: statusFilter || undefined,
+        });
+        setJobs(response.items);
+        setTotalPages(response.totalPages);
+      } catch (err) {
+        // Mock data for demo
+        const mockJobs: Job[] = [
+          {
+            id: 1,
+            jobNumber: 'JOB-2024-001',
+            status: 'in_progress',
+            description: 'Complete engine build - B18C1 with Wiseco pistons, Eagle rods',
+            estimatedCompletion: new Date(Date.now() + 7 * 86400000).toISOString(),
+            laborTotal: 2500,
+            partsTotal: 1200,
+            total: 3700,
+            tasks: [
+              { id: 1, jobId: 1, name: 'Disassembly & inspection', status: 'completed', displayOrder: 1 },
+              { id: 2, jobId: 1, name: 'Block machining', status: 'completed', displayOrder: 2 },
+              { id: 3, jobId: 1, name: 'Head porting', status: 'in_progress', displayOrder: 3 },
+              { id: 4, jobId: 1, name: 'Assembly', status: 'pending', displayOrder: 4 },
+              { id: 5, jobId: 1, name: 'Dyno tuning', status: 'pending', displayOrder: 5 },
+            ],
+            parts: [],
+            labor: [],
+            notes: [],
+            files: [],
+            createdAt: new Date(Date.now() - 10 * 86400000).toISOString(),
+          },
+          {
+            id: 2,
+            jobNumber: 'JOB-2024-002',
+            status: 'completed',
+            description: 'Cylinder head porting - K20A2',
+            completedAt: new Date(Date.now() - 5 * 86400000).toISOString(),
+            laborTotal: 800,
+            partsTotal: 0,
+            total: 800,
+            tasks: [],
+            parts: [],
+            labor: [],
+            notes: [],
+            files: [],
+            createdAt: new Date(Date.now() - 20 * 86400000).toISOString(),
+          },
+          {
+            id: 3,
+            jobNumber: 'JOB-2024-003',
+            status: 'pending_parts',
+            description: 'LS3 short block build',
+            estimatedCompletion: new Date(Date.now() + 14 * 86400000).toISOString(),
+            laborTotal: 1500,
+            partsTotal: 2500,
+            total: 4000,
+            tasks: [],
+            parts: [],
+            labor: [],
+            notes: [],
+            files: [],
+            createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
+          },
+        ];
+        setJobs(mockJobs);
+        setTotalPages(1);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, [currentPage, statusFilter, searchQuery]);
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'success';
+      case 'in_progress':
+        return 'info';
+      case 'pending_parts':
+        return 'warning';
+      case 'on_hold':
+        return 'danger';
+      default:
+        return 'secondary';
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    return status.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  };
+
+  const statusOptions = [
+    { value: '', label: 'All Jobs' },
+    { value: 'pending', label: 'Pending' },
+    { value: 'in_progress', label: 'In Progress' },
+    { value: 'pending_parts', label: 'Pending Parts' },
+    { value: 'on_hold', label: 'On Hold' },
+    { value: 'completed', label: 'Completed' },
+  ];
+
+  const getTaskProgress = (job: Job) => {
+    if (!job.tasks || job.tasks.length === 0) return null;
+    const completed = job.tasks.filter((t) => t.status === 'completed').length;
+    return { completed, total: job.tasks.length, percent: Math.round((completed / job.tasks.length) * 100) };
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <div className="animate-spin h-8 w-8 border-4 border-primary-600 border-t-transparent rounded-full" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-secondary-900">Active Jobs</h1>
+        <Link to="/services/request">
+          <Button size="sm" leftIcon={<Wrench className="h-4 w-4" />}>
+            New Request
+          </Button>
+        </Link>
+      </div>
+
+      {/* Filters */}
+      <Card>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex-1">
+            <Input
+              placeholder="Search by job number..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              leftIcon={<Search className="h-4 w-4" />}
+            />
+          </div>
+          <div className="w-full sm:w-48">
+            <Select
+              options={statusOptions}
+              value={statusFilter}
+              onChange={setStatusFilter}
+            />
+          </div>
+        </div>
+      </Card>
+
+      {/* Jobs List */}
+      {jobs.length > 0 ? (
+        <div className="space-y-4">
+          {jobs.map((job) => {
+            const progress = getTaskProgress(job);
+            return (
+              <Card key={job.id}>
+                <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="font-semibold text-secondary-900">{job.jobNumber}</h3>
+                      <Badge variant={getStatusColor(job.status)}>
+                        {getStatusLabel(job.status)}
+                      </Badge>
+                    </div>
+                    <p className="text-secondary-700 mb-2">{job.description}</p>
+                    <div className="flex flex-wrap gap-4 text-sm text-secondary-500">
+                      <span>Started: {formatDate(job.createdAt)}</span>
+                      {job.estimatedCompletion && (
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-4 w-4" />
+                          Est. Completion: {formatDate(job.estimatedCompletion)}
+                        </span>
+                      )}
+                      {job.completedAt && (
+                        <span className="flex items-center gap-1 text-green-600">
+                          <CheckCircle className="h-4 w-4" />
+                          Completed: {formatDate(job.completedAt)}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Progress Bar */}
+                    {progress && (
+                      <div className="mt-4">
+                        <div className="flex items-center justify-between text-sm mb-1">
+                          <span className="text-secondary-600">Progress</span>
+                          <span className="font-medium text-secondary-900">
+                            {progress.completed} of {progress.total} tasks
+                          </span>
+                        </div>
+                        <div className="h-2 bg-secondary-200 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-primary-600 rounded-full transition-all"
+                            style={{ width: `${progress.percent}%` }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col items-end gap-2">
+                    <div className="text-right">
+                      <p className="text-sm text-secondary-500">Estimated Total</p>
+                      <p className="text-xl font-bold text-primary-600">{formatPrice(job.total)}</p>
+                    </div>
+                    <Link to={`/account/jobs/${job.id}`}>
+                      <Button variant="outline" size="sm" leftIcon={<Eye className="h-4 w-4" />}>
+                        View Details
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Task List Preview */}
+                {job.tasks && job.tasks.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-secondary-200">
+                    <p className="text-sm font-medium text-secondary-700 mb-2">Tasks</p>
+                    <div className="flex flex-wrap gap-2">
+                      {job.tasks.slice(0, 5).map((task) => (
+                        <span
+                          key={task.id}
+                          className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs ${
+                            task.status === 'completed'
+                              ? 'bg-green-100 text-green-700'
+                              : task.status === 'in_progress'
+                              ? 'bg-blue-100 text-blue-700'
+                              : 'bg-secondary-100 text-secondary-600'
+                          }`}
+                        >
+                          {task.status === 'completed' && <CheckCircle className="h-3 w-3" />}
+                          {task.name}
+                        </span>
+                      ))}
+                      {job.tasks.length > 5 && (
+                        <span className="text-xs text-secondary-500">
+                          +{job.tasks.length - 5} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </Card>
+            );
+          })}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
+        </div>
+      ) : (
+        <EmptyState
+          icon={<Wrench className="h-16 w-16" />}
+          title="No jobs found"
+          description="You don't have any active jobs. Request a service to get started!"
+          action={{
+            label: 'Request Service',
+            onClick: () => window.location.href = '/services/request',
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default JobsPage;

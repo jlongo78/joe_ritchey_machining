@@ -1,0 +1,95 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Electric blue from logo - now the primary brand color
+        primary: {
+          50: '#e6f7ff',
+          100: '#b3e7ff',
+          200: '#80d4ff',
+          300: '#4dc1ff',
+          400: '#1aadff',
+          500: '#00a8ff',
+          600: '#0090db',
+          700: '#0077b8',
+          800: '#005f94',
+          900: '#004770',
+          950: '#002f4d',
+        },
+        secondary: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+          950: '#020617',
+        },
+        accent: {
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
+          950: '#451a03',
+        },
+        // Admin/Backoffice color palette (based on logo brand colors)
+        admin: {
+          bg: '#000000',
+          'bg-secondary': '#0a0a0a',
+          'bg-card': '#141414',
+          'bg-hover': '#1f1f1f',
+          border: '#2a2a2a',
+          'border-light': '#3a3a3a',
+        },
+        // Electric blue from logo glow (primary admin color)
+        electric: {
+          50: '#e6f7ff',
+          100: '#b3e7ff',
+          200: '#80d4ff',
+          300: '#4dc1ff',
+          400: '#1aadff',
+          500: '#00a8ff',
+          600: '#0090db',
+          700: '#0077b8',
+          800: '#005f94',
+          900: '#004770',
+          950: '#002f4d',
+        },
+        // Metallic silver/chrome from logo text
+        chrome: {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
+          950: '#0a0a0a',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Oswald', 'system-ui', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+}

@@ -1,0 +1,33 @@
+# ============================================
+# PRECISION ENGINE AND DYNO, LLC
+# Frontend Dockerfile - Development with Hot Reloading
+# ============================================
+
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install additional tools for development
+RUN apk add --no-cache curl git
+
+# Set environment variables
+ENV NODE_ENV=development \
+    CHOKIDAR_USEPOLLING=true \
+    WATCHPACK_POLLING=true
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies including devDependencies
+RUN npm install --silent && \
+    npm cache clean --force
+
+# Copy source code (will be overwritten by volume mounts)
+COPY . .
+
+# Expose development server port
+EXPOSE 3000
+
+# Run development server
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

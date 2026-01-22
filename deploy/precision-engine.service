@@ -1,0 +1,27 @@
+[Unit]
+Description=Precision Engine & Dyno Backend API
+After=network.target
+
+[Service]
+Type=simple
+User=runner
+Group=runner
+WorkingDirectory=/var/www/precision-engine/backend
+ExecStart=/var/www/precision-engine/backend/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8002
+Restart=on-failure
+RestartSec=10
+
+# Environment variables
+Environment=NODE_ENV=production
+Environment=DATABASE_URL=sqlite:///./precision_engine.db
+Environment=SECRET_KEY=change-this-to-a-real-secret-key
+Environment=JWT_SECRET=change-this-to-a-real-jwt-secret
+Environment=CORS_ORIGINS=https://joe_ritchey.thelongo.casa
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=precision-engine
+
+[Install]
+WantedBy=multi-user.target
