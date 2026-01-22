@@ -40,18 +40,19 @@ jobs:
       - name: Create .env file for backend
         run: |
           cd /var/www/joeritchey-backend
+          mkdir -p data
           if [ ! -f .env ]; then
             cat > .env << 'ENVFILE'
-          DEBUG=false
-          APP_ENV=production
-          SECRET_KEY=change-this-to-a-secure-random-string-at-least-32-chars
-          JWT_SECRET=change-this-to-another-secure-random-string-32-chars
-          DATABASE_URL=sqlite+aiosqlite:///./data/joeritchey.db
-          BACKEND_CORS_ORIGINS=https://joeritchey.thelongo.casa,http://localhost:3000
-          FRONTEND_URL=https://joeritchey.thelongo.casa
-          ENVFILE
-            mkdir -p data
+DEBUG=false
+APP_ENV=production
+SECRET_KEY=change-this-to-a-secure-random-string-at-least-32-chars
+JWT_SECRET=change-this-to-another-secure-random-string-32-chars
+DATABASE_URL=sqlite+aiosqlite:///./data/joeritchey.db
+BACKEND_CORS_ORIGINS=https://joeritchey.thelongo.casa,http://localhost:3000
+FRONTEND_URL=https://joeritchey.thelongo.casa
+ENVFILE
           fi
+          chown -R www-data:www-data data
 
       - name: Restart backend service
         run: sudo systemctl restart joeritchey-api
