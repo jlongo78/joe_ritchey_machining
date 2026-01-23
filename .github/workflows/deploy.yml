@@ -42,15 +42,13 @@ jobs:
           cd /var/www/joeritchey-backend
           mkdir -p data
           if [ ! -f .env ]; then
-            cat > .env << 'ENVFILE'
-DEBUG=false
-APP_ENV=production
-SECRET_KEY=change-this-to-a-secure-random-string-at-least-32-chars
-JWT_SECRET=change-this-to-another-secure-random-string-32-chars
-DATABASE_URL=sqlite+aiosqlite:///./data/joeritchey.db
-BACKEND_CORS_ORIGINS=https://joeritchey.thelongo.casa,http://localhost:3000
-FRONTEND_URL=https://joeritchey.thelongo.casa
-ENVFILE
+            echo 'DEBUG=false' > .env
+            echo 'APP_ENV=production' >> .env
+            echo 'SECRET_KEY=change-this-to-a-secure-random-string-at-least-32-chars' >> .env
+            echo 'JWT_SECRET=change-this-to-another-secure-random-string-32-chars' >> .env
+            echo 'DATABASE_URL=sqlite+aiosqlite:///./data/joeritchey.db' >> .env
+            echo 'BACKEND_CORS_ORIGINS=["https://joeritchey.thelongo.casa","http://localhost:3000"]' >> .env
+            echo 'FRONTEND_URL=https://joeritchey.thelongo.casa' >> .env
           fi
           chown -R www-data:www-data data
 
