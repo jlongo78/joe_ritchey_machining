@@ -50,7 +50,7 @@ jobs:
             echo 'BACKEND_CORS_ORIGINS=["https://joeritchey.thelongo.casa","http://localhost:3000"]' >> .env
             echo 'FRONTEND_URL=https://joeritchey.thelongo.casa' >> .env
           fi
-          chown -R www-data:www-data data
+          sudo chown -R www-data:www-data data || true
 
       - name: Restart backend service
         run: sudo systemctl restart joeritchey-api
