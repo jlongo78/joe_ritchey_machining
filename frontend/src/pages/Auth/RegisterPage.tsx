@@ -65,7 +65,7 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary-50 flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -75,8 +75,8 @@ const RegisterPage: React.FC = () => {
                 <span className="text-white text-xl font-bold">PE</span>
               </div>
               <div className="text-left">
-                <span className="block text-xl font-bold text-secondary-900">Precision Engine</span>
-                <span className="block text-sm text-secondary-500">& Dyno, LLC</span>
+                <span className="block text-xl font-bold text-chrome-100">Precision Engine</span>
+                <span className="block text-sm text-chrome-400">& Dyno, LLC</span>
               </div>
             </div>
           </Link>
@@ -84,8 +84,8 @@ const RegisterPage: React.FC = () => {
 
         <Card>
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-secondary-900">Create Account</h1>
-            <p className="text-secondary-500 mt-1">Join us for the best in performance parts & services</p>
+            <h1 className="text-2xl font-bold text-chrome-100">Create Account</h1>
+            <p className="text-chrome-400 mt-1">Join us for the best in performance parts & services</p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -135,7 +135,7 @@ const RegisterPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-9 text-secondary-400 hover:text-secondary-600"
+                className="absolute right-3 top-9 text-chrome-400 hover:text-chrome-200"
               >
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
@@ -153,7 +153,7 @@ const RegisterPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-9 text-secondary-400 hover:text-secondary-600"
+                className="absolute right-3 top-9 text-chrome-400 hover:text-chrome-200"
               >
                 {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
@@ -166,7 +166,7 @@ const RegisterPage: React.FC = () => {
                   {...register('acceptTerms')}
                   className="mt-1 h-4 w-4 text-primary-600 rounded"
                 />
-                <span className="text-sm text-secondary-600">
+                <span className="text-sm text-chrome-300">
                   I agree to the{' '}
                   <Link to="/terms" className="text-primary-600 hover:text-primary-700">
                     Terms of Service
@@ -194,7 +194,7 @@ const RegisterPage: React.FC = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-secondary-600">
+            <p className="text-chrome-300">
               Already have an account?{' '}
               <Link
                 to={`/login${searchParams.get('redirect') ? `?redirect=${searchParams.get('redirect')}` : ''}`}
@@ -208,19 +208,19 @@ const RegisterPage: React.FC = () => {
 
         {/* Benefits */}
         <div className="mt-6 grid grid-cols-2 gap-4">
-          <div className="p-4 bg-white rounded-lg border border-secondary-200 text-center">
-            <p className="text-sm font-medium text-secondary-900">Track Orders</p>
-            <p className="text-xs text-secondary-500 mt-1">Monitor your parts orders in real-time</p>
+          <div className="p-4 bg-chrome-900 rounded-lg border border-chrome-700 text-center">
+            <p className="text-sm font-medium text-chrome-100">Track Orders</p>
+            <p className="text-xs text-chrome-400 mt-1">Monitor your parts orders in real-time</p>
           </div>
-          <div className="p-4 bg-white rounded-lg border border-secondary-200 text-center">
-            <p className="text-sm font-medium text-secondary-900">Job Status</p>
-            <p className="text-xs text-secondary-500 mt-1">View progress on machining jobs</p>
+          <div className="p-4 bg-chrome-900 rounded-lg border border-chrome-700 text-center">
+            <p className="text-sm font-medium text-chrome-100">Job Status</p>
+            <p className="text-xs text-chrome-400 mt-1">View progress on machining jobs</p>
           </div>
         </div>
 
         {/* Back to Home */}
         <div className="mt-6 text-center">
-          <Link to="/" className="text-sm text-secondary-500 hover:text-secondary-700">
+          <Link to="/" className="text-sm text-chrome-400 hover:text-chrome-200">
             &larr; Back to Home
           </Link>
         </div>

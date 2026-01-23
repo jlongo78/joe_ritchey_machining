@@ -44,7 +44,7 @@ const ForgotPasswordPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary-50 flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -54,8 +54,8 @@ const ForgotPasswordPage: React.FC = () => {
                 <span className="text-white text-xl font-bold">PE</span>
               </div>
               <div className="text-left">
-                <span className="block text-xl font-bold text-secondary-900">Precision Engine</span>
-                <span className="block text-sm text-secondary-500">& Dyno, LLC</span>
+                <span className="block text-xl font-bold text-chrome-100">Precision Engine</span>
+                <span className="block text-sm text-chrome-400">& Dyno, LLC</span>
               </div>
             </div>
           </Link>
@@ -65,8 +65,8 @@ const ForgotPasswordPage: React.FC = () => {
           {!isSubmitted ? (
             <>
               <div className="text-center mb-6">
-                <h1 className="text-2xl font-bold text-secondary-900">Forgot Password?</h1>
-                <p className="text-secondary-500 mt-1">
+                <h1 className="text-2xl font-bold text-chrome-100">Forgot Password?</h1>
+                <p className="text-chrome-400 mt-1">
                   No worries, we&apos;ll send you reset instructions.
                 </p>
               </div>
@@ -94,15 +94,15 @@ const ForgotPasswordPage: React.FC = () => {
             </>
           ) : (
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="h-8 w-8 text-green-600" />
+              <div className="w-16 h-16 bg-green-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="h-8 w-8 text-green-400" />
               </div>
-              <h2 className="text-xl font-bold text-secondary-900 mb-2">Check Your Email</h2>
-              <p className="text-secondary-600 mb-4">
+              <h2 className="text-xl font-bold text-chrome-100 mb-2">Check Your Email</h2>
+              <p className="text-chrome-300 mb-4">
                 We&apos;ve sent password reset instructions to:
               </p>
-              <p className="font-medium text-secondary-900 mb-6">{submittedEmail}</p>
-              <p className="text-sm text-secondary-500 mb-6">
+              <p className="font-medium text-chrome-100 mb-6">{submittedEmail}</p>
+              <p className="text-sm text-chrome-400 mb-6">
                 Didn&apos;t receive the email? Check your spam folder or{' '}
                 <button
                   onClick={() => setIsSubmitted(false)}
@@ -117,7 +117,7 @@ const ForgotPasswordPage: React.FC = () => {
           <div className="mt-6 text-center">
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 text-secondary-600 hover:text-secondary-800"
+              className="inline-flex items-center gap-2 text-chrome-300 hover:text-chrome-100"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to Sign In
@@ -127,7 +127,7 @@ const ForgotPasswordPage: React.FC = () => {
 
         {/* Back to Home */}
         <div className="mt-6 text-center">
-          <Link to="/" className="text-sm text-secondary-500 hover:text-secondary-700">
+          <Link to="/" className="text-sm text-chrome-400 hover:text-chrome-200">
             &larr; Back to Home
           </Link>
         </div>

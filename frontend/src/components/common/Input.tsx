@@ -18,7 +18,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-medium text-secondary-700 mb-1.5"
+            className="block text-sm font-medium text-chrome-300 mb-1.5"
           >
             {label}
             {props.required && <span className="text-red-500 ml-1">*</span>}
@@ -26,7 +26,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative">
           {leftIcon && (
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary-400">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-chrome-400">
               {leftIcon}
             </div>
           )}
@@ -34,9 +34,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              'block w-full rounded-lg border border-secondary-300 bg-white px-4 py-2.5 text-secondary-900 placeholder-secondary-400',
+              'block w-full rounded-lg border border-chrome-700 bg-chrome-900 px-4 py-2.5 text-chrome-100 placeholder-chrome-500',
               'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
-              'disabled:bg-secondary-50 disabled:text-secondary-500 disabled:cursor-not-allowed',
+              'disabled:bg-chrome-800 disabled:text-chrome-500 disabled:cursor-not-allowed',
               'transition-colors duration-200',
               error && 'border-red-500 focus:ring-red-500',
               leftIcon && 'pl-10',
@@ -46,14 +46,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightIcon && (
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-secondary-400">
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-chrome-400">
               {rightIcon}
             </div>
           )}
         </div>
-        {error && <p className="mt-1.5 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-1.5 text-sm text-red-500">{error}</p>}
         {helperText && !error && (
-          <p className="mt-1.5 text-sm text-secondary-500">{helperText}</p>
+          <p className="mt-1.5 text-sm text-chrome-400">{helperText}</p>
         )}
       </div>
     );

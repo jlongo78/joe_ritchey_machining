@@ -52,7 +52,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary-50 flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -62,8 +62,8 @@ const LoginPage: React.FC = () => {
                 <span className="text-white text-xl font-bold">PE</span>
               </div>
               <div className="text-left">
-                <span className="block text-xl font-bold text-secondary-900">Precision Engine</span>
-                <span className="block text-sm text-secondary-500">& Dyno, LLC</span>
+                <span className="block text-xl font-bold text-chrome-100">Precision Engine</span>
+                <span className="block text-sm text-chrome-400">& Dyno, LLC</span>
               </div>
             </div>
           </Link>
@@ -71,8 +71,8 @@ const LoginPage: React.FC = () => {
 
         <Card>
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-secondary-900">Welcome Back</h1>
-            <p className="text-secondary-500 mt-1">Sign in to access your account</p>
+            <h1 className="text-2xl font-bold text-chrome-100">Welcome Back</h1>
+            <p className="text-chrome-400 mt-1">Sign in to access your account</p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -97,7 +97,7 @@ const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-9 text-secondary-400 hover:text-secondary-600"
+                className="absolute right-3 top-9 text-chrome-400 hover:text-chrome-200"
               >
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
@@ -108,9 +108,9 @@ const LoginPage: React.FC = () => {
                 <input
                   type="checkbox"
                   {...register('rememberMe')}
-                  className="h-4 w-4 text-primary-600 rounded"
+                  className="h-4 w-4 text-primary-600 rounded bg-chrome-800 border-chrome-600"
                 />
-                <span className="text-sm text-secondary-600">Remember me</span>
+                <span className="text-sm text-chrome-300">Remember me</span>
               </label>
               <Link
                 to="/forgot-password"
@@ -132,11 +132,11 @@ const LoginPage: React.FC = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-secondary-600">
+            <p className="text-chrome-400">
               Don&apos;t have an account?{' '}
               <Link
                 to={`/register${searchParams.get('redirect') ? `?redirect=${searchParams.get('redirect')}` : ''}`}
-                className="text-primary-600 hover:text-primary-700 font-medium"
+                className="text-primary-500 hover:text-primary-400 font-medium"
               >
                 Create Account
               </Link>
@@ -145,19 +145,19 @@ const LoginPage: React.FC = () => {
         </Card>
 
         {/* Demo Credentials */}
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-800 font-medium mb-2">Demo Credentials</p>
-          <p className="text-sm text-blue-700">
-            Email: <span className="font-mono">demo@example.com</span>
+        <div className="mt-6 p-4 bg-primary-900/30 border border-primary-700/50 rounded-lg">
+          <p className="text-sm text-primary-300 font-medium mb-2">Demo Credentials</p>
+          <p className="text-sm text-primary-200">
+            Email: <span className="font-mono">admin@joeritchey.com</span>
           </p>
-          <p className="text-sm text-blue-700">
-            Password: <span className="font-mono">demo123</span>
+          <p className="text-sm text-primary-200">
+            Password: <span className="font-mono">Admin123!</span>
           </p>
         </div>
 
         {/* Back to Home */}
         <div className="mt-6 text-center">
-          <Link to="/" className="text-sm text-secondary-500 hover:text-secondary-700">
+          <Link to="/" className="text-sm text-chrome-400 hover:text-chrome-200">
             &larr; Back to Home
           </Link>
         </div>
