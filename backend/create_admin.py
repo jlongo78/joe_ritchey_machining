@@ -9,7 +9,7 @@ async def create_admin():
         service = UserService(db)
         user = await service.create(UserCreate(
             email='admin@joeritchey.com',
-            password='changeme123',
+            password='Admin123!',
             first_name='Admin',
             last_name='User',
             role='admin'

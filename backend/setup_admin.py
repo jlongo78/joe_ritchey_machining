@@ -19,7 +19,7 @@ async def setup_admin():
         if existing:
             # Update password
             await conn.execute(
-                text("UPDATE users SET hashed_password = :pwd WHERE email = :email"),
+                text("UPDATE users SET password_hash = :pwd WHERE email = :email"),
                 {"pwd": password_hash, "email": "admin@joeritchey.com"}
             )
             print("Password updated for admin@joeritchey.com")
@@ -27,7 +27,7 @@ async def setup_admin():
             # Insert new user
             await conn.execute(
                 text("""
-                    INSERT INTO users (email, hashed_password, first_name, last_name, role, is_active, is_verified)
+                    INSERT INTO users (email, password_hash, first_name, last_name, role, is_active, email_verified)
                     VALUES (:email, :pwd, :first, :last, :role, 1, 1)
                 """),
                 {
