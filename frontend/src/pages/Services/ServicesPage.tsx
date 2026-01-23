@@ -33,11 +33,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-4">
         {icon}
       </div>
-      <h3 className="text-xl font-semibold text-secondary-900 mb-2">{title}</h3>
-      <p className="text-secondary-600 mb-4">{description}</p>
+      <h3 className="text-xl font-semibold text-chrome-100 mb-2">{title}</h3>
+      <p className="text-chrome-300 mb-4">{description}</p>
       <ul className="space-y-2 mb-6 flex-1">
         {features.map((feature, index) => (
-          <li key={index} className="flex items-start gap-2 text-sm text-secondary-600">
+          <li key={index} className="flex items-start gap-2 text-sm text-chrome-300">
             <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
             <span>{feature}</span>
           </li>
@@ -132,14 +132,14 @@ const ServicesPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-black">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-secondary-200">
+      <div className="bg-chrome-900 border-b border-chrome-700">
         <div className="container mx-auto px-4 py-3">
-          <nav className="text-sm text-secondary-500">
+          <nav className="text-sm text-chrome-400">
             <Link to="/" className="hover:text-primary-600">Home</Link>
             <span className="mx-2">/</span>
-            <span className="text-secondary-900">Machining Services</span>
+            <span className="text-chrome-100">Machining Services</span>
           </nav>
         </div>
       </div>
@@ -151,7 +151,7 @@ const ServicesPage: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Professional Engine Machining Services
             </h1>
-            <p className="text-xl text-secondary-300 mb-8">
+            <p className="text-xl text-chrome-400 mb-8">
               From street performance to full race applications, our experienced machinists
               deliver precision work you can trust. Over 30 years of experience building
               winning engines.
@@ -175,8 +175,8 @@ const ServicesPage: React.FC = () => {
       {/* Services Grid */}
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-secondary-900 mb-4">Our Services</h2>
-          <p className="text-secondary-600 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-chrome-100 mb-4">Our Services</h2>
+          <p className="text-chrome-300 max-w-2xl mx-auto">
             We offer a complete range of engine machining services, from basic machine work
             to complete engine builds. Every job receives the same attention to detail.
           </p>
@@ -190,11 +190,11 @@ const ServicesPage: React.FC = () => {
       </div>
 
       {/* Why Choose Us */}
-      <div className="bg-white py-16">
+      <div className="bg-chrome-900 py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-secondary-900 mb-4">Why Choose Us</h2>
-            <p className="text-secondary-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-chrome-100 mb-4">Why Choose Us</h2>
+            <p className="text-chrome-300 max-w-2xl mx-auto">
               When you trust us with your engine, you&apos;re getting more than just machine work.
               You&apos;re getting decades of experience and a commitment to excellence.
             </p>
@@ -206,8 +206,8 @@ const ServicesPage: React.FC = () => {
                 <div className="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 mx-auto mb-4">
                   {item.icon}
                 </div>
-                <h3 className="font-semibold text-secondary-900 mb-2">{item.title}</h3>
-                <p className="text-sm text-secondary-600">{item.description}</p>
+                <h3 className="font-semibold text-chrome-100 mb-2">{item.title}</h3>
+                <p className="text-sm text-chrome-300">{item.description}</p>
               </div>
             ))}
           </div>
@@ -217,8 +217,8 @@ const ServicesPage: React.FC = () => {
       {/* Process Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-secondary-900 mb-4">How It Works</h2>
-          <p className="text-secondary-600 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-chrome-100 mb-4">How It Works</h2>
+          <p className="text-chrome-300 max-w-2xl mx-auto">
             Getting your engine work done with us is easy. Follow these simple steps to get started.
           </p>
         </div>
@@ -234,8 +234,8 @@ const ServicesPage: React.FC = () => {
               <div className="w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                 {item.step}
               </div>
-              <h3 className="font-semibold text-secondary-900 mb-2">{item.title}</h3>
-              <p className="text-sm text-secondary-600">{item.description}</p>
+              <h3 className="font-semibold text-chrome-100 mb-2">{item.title}</h3>
+              <p className="text-sm text-chrome-300">{item.description}</p>
             </div>
           ))}
         </div>
@@ -265,7 +265,7 @@ const ServicesPage: React.FC = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-white text-white hover:bg-white hover:text-primary-600"
+                className="border-white text-white hover:bg-chrome-900 hover:text-primary-600"
                 leftIcon={<Phone className="h-5 w-5" />}
               >
                 (555) 123-4567

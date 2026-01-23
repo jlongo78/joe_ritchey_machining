@@ -155,7 +155,7 @@ const ServiceRequestsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-secondary-900">Service Requests</h1>
+        <h1 className="text-2xl font-bold text-chrome-100">Service Requests</h1>
         <Link to="/services/request">
           <Button size="sm" leftIcon={<Plus className="h-4 w-4" />}>
             New Request
@@ -190,7 +190,7 @@ const ServiceRequestsPage: React.FC = () => {
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="font-semibold text-secondary-900">{request.requestNumber}</h3>
+                    <h3 className="font-semibold text-chrome-100">{request.requestNumber}</h3>
                     <Badge variant={getStatusColor(request.status)}>
                       <span className="flex items-center gap-1">
                         {getStatusIcon(request.status)}
@@ -198,8 +198,8 @@ const ServiceRequestsPage: React.FC = () => {
                       </span>
                     </Badge>
                   </div>
-                  <p className="text-secondary-700 mb-2">{request.description}</p>
-                  <p className="text-sm text-secondary-500">
+                  <p className="text-chrome-300 mb-2">{request.description}</p>
+                  <p className="text-sm text-chrome-400">
                     Submitted: {formatDate(request.createdAt)}
                   </p>
 
@@ -208,7 +208,7 @@ const ServiceRequestsPage: React.FC = () => {
                     {request.items.map((item) => (
                       <span
                         key={item.id}
-                        className="inline-flex items-center px-2 py-1 bg-secondary-100 text-secondary-700 rounded text-sm"
+                        className="inline-flex items-center px-2 py-1 bg-chrome-900 text-chrome-300 rounded text-sm"
                       >
                         {item.description}
                         {item.quantity > 1 && ` (x${item.quantity})`}

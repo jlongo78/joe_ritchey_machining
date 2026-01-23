@@ -186,7 +186,7 @@ const InvoicesPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-secondary-900">Invoices</h1>
+        <h1 className="text-2xl font-bold text-chrome-100">Invoices</h1>
       </div>
 
       {/* Summary Cards */}
@@ -242,7 +242,7 @@ const InvoicesPage: React.FC = () => {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="font-semibold text-secondary-900">{invoice.invoiceNumber}</h3>
+                      <h3 className="font-semibold text-chrome-100">{invoice.invoiceNumber}</h3>
                       <Badge variant={getStatusColor(invoice.status)}>
                         <span className="flex items-center gap-1">
                           {getStatusIcon(invoice.status)}
@@ -250,7 +250,7 @@ const InvoicesPage: React.FC = () => {
                         </span>
                       </Badge>
                     </div>
-                    <div className="text-sm text-secondary-500 space-y-1">
+                    <div className="text-sm text-chrome-400 space-y-1">
                       <p>Issued: {formatDate(invoice.createdAt)}</p>
                       <p className={isOverdue ? 'text-red-600 font-medium' : ''}>
                         Due: {formatDate(invoice.dueDate)}
@@ -266,10 +266,10 @@ const InvoicesPage: React.FC = () => {
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <div className="text-right">
-                      <p className="text-sm text-secondary-500">Total</p>
-                      <p className="text-lg font-bold text-secondary-900">{formatPrice(invoice.total)}</p>
+                      <p className="text-sm text-chrome-400">Total</p>
+                      <p className="text-lg font-bold text-chrome-100">{formatPrice(invoice.total)}</p>
                       {invoice.balanceDue > 0 && invoice.balanceDue < invoice.total && (
-                        <p className="text-sm text-secondary-600">
+                        <p className="text-sm text-chrome-300">
                           Remaining: <span className="font-medium text-primary-600">{formatPrice(invoice.balanceDue)}</span>
                         </p>
                       )}
@@ -300,11 +300,11 @@ const InvoicesPage: React.FC = () => {
                 </div>
 
                 {/* Items Preview */}
-                <div className="mt-4 pt-4 border-t border-secondary-200">
+                <div className="mt-4 pt-4 border-t border-chrome-700">
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="text-left text-secondary-500">
+                        <tr className="text-left text-chrome-400">
                           <th className="pb-2 font-medium">Description</th>
                           <th className="pb-2 font-medium text-right">Qty</th>
                           <th className="pb-2 font-medium text-right">Price</th>
@@ -313,7 +313,7 @@ const InvoicesPage: React.FC = () => {
                       </thead>
                       <tbody>
                         {invoice.items.slice(0, 3).map((item) => (
-                          <tr key={item.id} className="text-secondary-700">
+                          <tr key={item.id} className="text-chrome-300">
                             <td className="py-1">{item.description}</td>
                             <td className="py-1 text-right">{item.quantity}</td>
                             <td className="py-1 text-right">{formatPrice(item.unitPrice)}</td>
@@ -322,7 +322,7 @@ const InvoicesPage: React.FC = () => {
                         ))}
                         {invoice.items.length > 3 && (
                           <tr>
-                            <td colSpan={4} className="py-1 text-secondary-500">
+                            <td colSpan={4} className="py-1 text-chrome-400">
                               +{invoice.items.length - 3} more items
                             </td>
                           </tr>
@@ -334,12 +334,12 @@ const InvoicesPage: React.FC = () => {
 
                 {/* Payment History */}
                 {invoice.payments && invoice.payments.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-secondary-200">
-                    <p className="text-sm font-medium text-secondary-700 mb-2">Payment History</p>
+                  <div className="mt-4 pt-4 border-t border-chrome-700">
+                    <p className="text-sm font-medium text-chrome-300 mb-2">Payment History</p>
                     <div className="space-y-1">
                       {invoice.payments.map((payment) => (
                         <div key={payment.id} className="flex items-center justify-between text-sm">
-                          <span className="text-secondary-600">
+                          <span className="text-chrome-300">
                             {formatDate(payment.paymentDate)} - {payment.paymentMethod.replace('_', ' ')}
                           </span>
                           <span className="font-medium text-green-600">

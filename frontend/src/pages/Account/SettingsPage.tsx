@@ -92,10 +92,10 @@ const SettingsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-secondary-900">Account Settings</h1>
+      <h1 className="text-2xl font-bold text-chrome-100">Account Settings</h1>
 
       {/* Tabs */}
-      <div className="border-b border-secondary-200">
+      <div className="border-b border-chrome-700">
         <nav className="flex gap-6">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -106,7 +106,7 @@ const SettingsPage: React.FC = () => {
                 className={`flex items-center gap-2 py-3 border-b-2 transition-colors ${
                   activeTab === tab.key
                     ? 'border-primary-600 text-primary-600'
-                    : 'border-transparent text-secondary-500 hover:text-secondary-700'
+                    : 'border-transparent text-chrome-400 hover:text-chrome-300'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -120,7 +120,7 @@ const SettingsPage: React.FC = () => {
       {/* Profile Tab */}
       {activeTab === 'profile' && (
         <Card>
-          <h2 className="text-lg font-semibold text-secondary-900 mb-6">Profile Information</h2>
+          <h2 className="text-lg font-semibold text-chrome-100 mb-6">Profile Information</h2>
           <form onSubmit={handleProfileSubmit(onProfileSubmit)} className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <Input
@@ -158,7 +158,7 @@ const SettingsPage: React.FC = () => {
       {/* Password Tab */}
       {activeTab === 'password' && (
         <Card>
-          <h2 className="text-lg font-semibold text-secondary-900 mb-6">Change Password</h2>
+          <h2 className="text-lg font-semibold text-chrome-100 mb-6">Change Password</h2>
           <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className="space-y-4 max-w-md">
             <Input
               label="Current Password"
@@ -191,7 +191,7 @@ const SettingsPage: React.FC = () => {
       {activeTab === 'addresses' && (
         <Card>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-secondary-900">Saved Addresses</h2>
+            <h2 className="text-lg font-semibold text-chrome-100">Saved Addresses</h2>
             <Button size="sm" variant="outline">
               Add Address
             </Button>
@@ -199,17 +199,17 @@ const SettingsPage: React.FC = () => {
 
           <div className="space-y-4">
             {/* Default Address */}
-            <div className="p-4 border border-secondary-200 rounded-lg">
+            <div className="p-4 border border-chrome-700 rounded-lg">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="font-medium text-secondary-900">Home</span>
+                    <span className="font-medium text-chrome-100">Home</span>
                     <span className="text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded">Default</span>
                   </div>
-                  <p className="text-secondary-600">John Doe</p>
-                  <p className="text-secondary-600">123 Main Street</p>
-                  <p className="text-secondary-600">Austin, TX 78701</p>
-                  <p className="text-secondary-500 text-sm mt-1">(555) 123-4567</p>
+                  <p className="text-chrome-300">John Doe</p>
+                  <p className="text-chrome-300">123 Main Street</p>
+                  <p className="text-chrome-300">Austin, TX 78701</p>
+                  <p className="text-chrome-400 text-sm mt-1">(555) 123-4567</p>
                 </div>
                 <div className="flex gap-2">
                   <Button size="sm" variant="outline">Edit</Button>
@@ -219,16 +219,16 @@ const SettingsPage: React.FC = () => {
             </div>
 
             {/* Another Address */}
-            <div className="p-4 border border-secondary-200 rounded-lg">
+            <div className="p-4 border border-chrome-700 rounded-lg">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="font-medium text-secondary-900">Shop</span>
+                    <span className="font-medium text-chrome-100">Shop</span>
                   </div>
-                  <p className="text-secondary-600">John Doe</p>
-                  <p className="text-secondary-600">456 Industrial Blvd</p>
-                  <p className="text-secondary-600">Austin, TX 78702</p>
-                  <p className="text-secondary-500 text-sm mt-1">(555) 987-6543</p>
+                  <p className="text-chrome-300">John Doe</p>
+                  <p className="text-chrome-300">456 Industrial Blvd</p>
+                  <p className="text-chrome-300">Austin, TX 78702</p>
+                  <p className="text-chrome-400 text-sm mt-1">(555) 987-6543</p>
                 </div>
                 <div className="flex gap-2">
                   <Button size="sm" variant="outline">Edit</Button>
@@ -243,11 +243,11 @@ const SettingsPage: React.FC = () => {
       {/* Notifications Tab */}
       {activeTab === 'notifications' && (
         <Card>
-          <h2 className="text-lg font-semibold text-secondary-900 mb-6">Notification Preferences</h2>
+          <h2 className="text-lg font-semibold text-chrome-100 mb-6">Notification Preferences</h2>
 
           <div className="space-y-6">
             <div>
-              <h3 className="font-medium text-secondary-900 mb-4">Email Notifications</h3>
+              <h3 className="font-medium text-chrome-100 mb-4">Email Notifications</h3>
               <div className="space-y-3">
                 {[
                   { label: 'Order updates', description: 'Receive updates about your parts orders', checked: true },
@@ -263,18 +263,18 @@ const SettingsPage: React.FC = () => {
                       className="mt-1 h-4 w-4 text-primary-600 rounded"
                     />
                     <div>
-                      <p className="font-medium text-secondary-900">{item.label}</p>
-                      <p className="text-sm text-secondary-500">{item.description}</p>
+                      <p className="font-medium text-chrome-100">{item.label}</p>
+                      <p className="text-sm text-chrome-400">{item.description}</p>
                     </div>
                   </label>
                 ))}
               </div>
             </div>
 
-            <hr className="border-secondary-200" />
+            <hr className="border-chrome-700" />
 
             <div>
-              <h3 className="font-medium text-secondary-900 mb-4">SMS Notifications</h3>
+              <h3 className="font-medium text-chrome-100 mb-4">SMS Notifications</h3>
               <div className="space-y-3">
                 {[
                   { label: 'Job completion alerts', description: 'Get a text when your job is ready', checked: true },
@@ -287,8 +287,8 @@ const SettingsPage: React.FC = () => {
                       className="mt-1 h-4 w-4 text-primary-600 rounded"
                     />
                     <div>
-                      <p className="font-medium text-secondary-900">{item.label}</p>
-                      <p className="text-sm text-secondary-500">{item.description}</p>
+                      <p className="font-medium text-chrome-100">{item.label}</p>
+                      <p className="text-sm text-chrome-400">{item.description}</p>
                     </div>
                   </label>
                 ))}

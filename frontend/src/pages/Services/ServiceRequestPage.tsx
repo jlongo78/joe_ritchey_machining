@@ -186,23 +186,23 @@ const ServiceRequestPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-secondary-50 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="animate-spin h-8 w-8 border-4 border-primary-600 border-t-transparent rounded-full" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-black">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-secondary-200">
+      <div className="bg-chrome-900 border-b border-chrome-700">
         <div className="container mx-auto px-4 py-3">
-          <nav className="text-sm text-secondary-500">
+          <nav className="text-sm text-chrome-400">
             <Link to="/" className="hover:text-primary-600">Home</Link>
             <span className="mx-2">/</span>
             <Link to="/services" className="hover:text-primary-600">Machining Services</Link>
             <span className="mx-2">/</span>
-            <span className="text-secondary-900">Request Quote</span>
+            <span className="text-chrome-100">Request Quote</span>
           </nav>
         </div>
       </div>
@@ -210,10 +210,10 @@ const ServiceRequestPage: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-secondary-900 mb-2">
+            <h1 className="text-3xl font-bold text-chrome-100 mb-2">
               Request a Service Quote
             </h1>
-            <p className="text-secondary-600">
+            <p className="text-chrome-300">
               Tell us about your project and we&apos;ll provide a detailed quote within 24-48 hours.
             </p>
           </div>
@@ -223,7 +223,7 @@ const ServiceRequestPage: React.FC = () => {
             <Card>
               <div className="flex items-center gap-2 mb-4">
                 <Car className="h-5 w-5 text-primary-600" />
-                <h2 className="text-lg font-semibold text-secondary-900">Vehicle Information</h2>
+                <h2 className="text-lg font-semibold text-chrome-100">Vehicle Information</h2>
               </div>
 
               {isAuthenticated && vehicles.length > 0 && (
@@ -236,7 +236,7 @@ const ServiceRequestPage: React.FC = () => {
                         onChange={() => setValue('useExistingVehicle', true)}
                         className="h-4 w-4 text-primary-600"
                       />
-                      <span className="text-secondary-700">Use existing vehicle</span>
+                      <span className="text-chrome-300">Use existing vehicle</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
@@ -245,7 +245,7 @@ const ServiceRequestPage: React.FC = () => {
                         onChange={() => setValue('useExistingVehicle', false)}
                         className="h-4 w-4 text-primary-600"
                       />
-                      <span className="text-secondary-700">Add new vehicle</span>
+                      <span className="text-chrome-300">Add new vehicle</span>
                     </label>
                   </div>
 
@@ -298,12 +298,12 @@ const ServiceRequestPage: React.FC = () => {
             <Card>
               <div className="flex items-center gap-2 mb-4">
                 <Wrench className="h-5 w-5 text-primary-600" />
-                <h2 className="text-lg font-semibold text-secondary-900">Services Requested</h2>
+                <h2 className="text-lg font-semibold text-chrome-100">Services Requested</h2>
               </div>
 
               <div className="space-y-4">
                 {fields.map((field, index) => (
-                  <div key={field.id} className="p-4 bg-secondary-50 rounded-lg">
+                  <div key={field.id} className="p-4 bg-black rounded-lg">
                     <div className="flex items-start gap-4">
                       <div className="flex-1 grid sm:grid-cols-2 gap-4">
                         <Select
@@ -364,7 +364,7 @@ const ServiceRequestPage: React.FC = () => {
             <Card>
               <div className="flex items-center gap-2 mb-4">
                 <FileText className="h-5 w-5 text-primary-600" />
-                <h2 className="text-lg font-semibold text-secondary-900">Project Description</h2>
+                <h2 className="text-lg font-semibold text-chrome-100">Project Description</h2>
               </div>
 
               <Textarea
@@ -377,15 +377,15 @@ const ServiceRequestPage: React.FC = () => {
 
               {/* File Upload */}
               <div className="mt-4">
-                <label className="block text-sm font-medium text-secondary-700 mb-2">
+                <label className="block text-sm font-medium text-chrome-300 mb-2">
                   Attachments (Optional)
                 </label>
-                <div className="border-2 border-dashed border-secondary-300 rounded-lg p-6 text-center">
-                  <Upload className="h-8 w-8 text-secondary-400 mx-auto mb-2" />
-                  <p className="text-secondary-600 mb-2">
+                <div className="border-2 border-dashed border-chrome-600 rounded-lg p-6 text-center">
+                  <Upload className="h-8 w-8 text-chrome-500 mx-auto mb-2" />
+                  <p className="text-chrome-300 mb-2">
                     Drag and drop files here, or click to browse
                   </p>
-                  <p className="text-sm text-secondary-400 mb-4">
+                  <p className="text-sm text-chrome-500 mb-4">
                     Photos of parts, spec sheets, or any relevant documents
                   </p>
                   <input
@@ -397,7 +397,7 @@ const ServiceRequestPage: React.FC = () => {
                     accept="image/*,.pdf,.doc,.docx"
                   />
                   <label htmlFor="file-upload" className="cursor-pointer">
-                    <span className="inline-flex items-center justify-center px-4 py-2 border border-secondary-300 rounded-lg text-sm font-medium text-secondary-700 bg-white hover:bg-secondary-50 transition-colors">
+                    <span className="inline-flex items-center justify-center px-4 py-2 border border-chrome-600 rounded-lg text-sm font-medium text-chrome-300 bg-chrome-900 hover:bg-black transition-colors">
                       Browse Files
                     </span>
                   </label>
@@ -408,9 +408,9 @@ const ServiceRequestPage: React.FC = () => {
                     {uploadedFiles.map((file, index) => (
                       <li
                         key={index}
-                        className="flex items-center justify-between p-3 bg-secondary-50 rounded-lg"
+                        className="flex items-center justify-between p-3 bg-black rounded-lg"
                       >
-                        <span className="text-sm text-secondary-700">{file.name}</span>
+                        <span className="text-sm text-chrome-300">{file.name}</span>
                         <button
                           type="button"
                           onClick={() => removeFile(index)}
@@ -427,7 +427,7 @@ const ServiceRequestPage: React.FC = () => {
 
             {/* Preferences */}
             <Card>
-              <h2 className="text-lg font-semibold text-secondary-900 mb-4">Preferences</h2>
+              <h2 className="text-lg font-semibold text-chrome-100 mb-4">Preferences</h2>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <Select

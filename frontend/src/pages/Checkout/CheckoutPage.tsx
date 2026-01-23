@@ -271,16 +271,16 @@ const CheckoutPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <div className="bg-white border-b border-secondary-200">
+      <div className="bg-chrome-900 border-b border-chrome-700">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/cart" className="flex items-center gap-2 text-secondary-600 hover:text-primary-600">
+            <Link to="/cart" className="flex items-center gap-2 text-chrome-300 hover:text-primary-600">
               <ChevronLeft className="h-5 w-5" />
               Back to Cart
             </Link>
-            <h1 className="text-xl font-bold text-secondary-900">Checkout</h1>
+            <h1 className="text-xl font-bold text-chrome-100">Checkout</h1>
             <div className="flex items-center gap-2 text-green-600">
               <Lock className="h-4 w-4" />
               <span className="text-sm">Secure Checkout</span>
@@ -290,7 +290,7 @@ const CheckoutPage: React.FC = () => {
       </div>
 
       {/* Progress Steps */}
-      <div className="bg-white border-b border-secondary-200">
+      <div className="bg-chrome-900 border-b border-chrome-700">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-center gap-4">
             {steps.map((s, index) => {
@@ -306,7 +306,7 @@ const CheckoutPage: React.FC = () => {
                     <div
                       className={cn(
                         'h-px w-12 sm:w-24',
-                        isCompleted ? 'bg-primary-600' : 'bg-secondary-300'
+                        isCompleted ? 'bg-primary-600' : 'bg-chrome-600'
                       )}
                     />
                   )}
@@ -321,7 +321,7 @@ const CheckoutPage: React.FC = () => {
                       'flex items-center gap-2 px-4 py-2 rounded-lg transition-colors',
                       isActive && 'bg-primary-600 text-white',
                       isCompleted && 'bg-primary-100 text-primary-700',
-                      !isActive && !isCompleted && 'bg-secondary-100 text-secondary-400'
+                      !isActive && !isCompleted && 'bg-chrome-900 text-chrome-500'
                     )}
                   >
                     <Icon className="h-5 w-5" />
@@ -344,7 +344,7 @@ const CheckoutPage: React.FC = () => {
                 <>
                   {/* Contact Information */}
                   <Card>
-                    <h2 className="text-lg font-semibold text-secondary-900 mb-4">
+                    <h2 className="text-lg font-semibold text-chrome-100 mb-4">
                       Contact Information
                     </h2>
                     <Input
@@ -358,7 +358,7 @@ const CheckoutPage: React.FC = () => {
 
                   {/* Shipping Address */}
                   <Card>
-                    <h2 className="text-lg font-semibold text-secondary-900 mb-4">
+                    <h2 className="text-lg font-semibold text-chrome-100 mb-4">
                       Shipping Address
                     </h2>
                     <div className="grid sm:grid-cols-2 gap-4">
@@ -413,13 +413,13 @@ const CheckoutPage: React.FC = () => {
 
                   {/* Shipping Method */}
                   <Card>
-                    <h2 className="text-lg font-semibold text-secondary-900 mb-4">
+                    <h2 className="text-lg font-semibold text-chrome-100 mb-4">
                       Shipping Method
                     </h2>
                     {isLoadingRates ? (
                       <div className="flex items-center justify-center py-8">
                         <div className="animate-spin h-6 w-6 border-2 border-primary-600 border-t-transparent rounded-full" />
-                        <span className="ml-3 text-secondary-500">Calculating shipping rates...</span>
+                        <span className="ml-3 text-chrome-400">Calculating shipping rates...</span>
                       </div>
                     ) : shippingRates.length > 0 ? (
                       <div className="space-y-3">
@@ -430,7 +430,7 @@ const CheckoutPage: React.FC = () => {
                               'flex items-center justify-between p-4 border rounded-lg cursor-pointer transition-colors',
                               selectedShippingRate?.id === rate.id
                                 ? 'border-primary-600 bg-primary-50'
-                                : 'border-secondary-300 hover:border-secondary-400'
+                                : 'border-chrome-600 hover:border-chrome-500'
                             )}
                           >
                             <div className="flex items-center gap-3">
@@ -442,18 +442,18 @@ const CheckoutPage: React.FC = () => {
                                 className="h-4 w-4 text-primary-600"
                               />
                               <div>
-                                <p className="font-medium text-secondary-900">{rate.name}</p>
-                                <p className="text-sm text-secondary-500">{rate.description}</p>
+                                <p className="font-medium text-chrome-100">{rate.name}</p>
+                                <p className="text-sm text-chrome-400">{rate.description}</p>
                               </div>
                             </div>
-                            <span className="font-semibold text-secondary-900">
+                            <span className="font-semibold text-chrome-100">
                               {rate.price === 0 ? 'FREE' : formatPrice(rate.price)}
                             </span>
                           </label>
                         ))}
                       </div>
                     ) : (
-                      <p className="text-secondary-500 text-center py-4">
+                      <p className="text-chrome-400 text-center py-4">
                         Enter your shipping address to see available shipping options.
                       </p>
                     )}
@@ -478,7 +478,7 @@ const CheckoutPage: React.FC = () => {
                   {/* Billing Address */}
                   <Card>
                     <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-lg font-semibold text-secondary-900">
+                      <h2 className="text-lg font-semibold text-chrome-100">
                         Billing Address
                       </h2>
                       <label className="flex items-center gap-2 cursor-pointer">
@@ -488,7 +488,7 @@ const CheckoutPage: React.FC = () => {
                           onChange={(e) => setValue('sameAsBilling', e.target.checked)}
                           className="h-4 w-4 text-primary-600 rounded"
                         />
-                        <span className="text-sm text-secondary-600">Same as shipping</span>
+                        <span className="text-sm text-chrome-300">Same as shipping</span>
                       </label>
                     </div>
 
@@ -544,15 +544,15 @@ const CheckoutPage: React.FC = () => {
                     )}
 
                     {sameAsBilling && (
-                      <div className="bg-secondary-50 rounded-lg p-4">
-                        <p className="text-secondary-700">
+                      <div className="bg-black rounded-lg p-4">
+                        <p className="text-chrome-300">
                           {shippingAddress?.firstName} {shippingAddress?.lastName}
                         </p>
-                        <p className="text-secondary-600 text-sm">
+                        <p className="text-chrome-300 text-sm">
                           {shippingAddress?.street1}
                           {shippingAddress?.street2 && `, ${shippingAddress.street2}`}
                         </p>
-                        <p className="text-secondary-600 text-sm">
+                        <p className="text-chrome-300 text-sm">
                           {shippingAddress?.city}, {shippingAddress?.state} {shippingAddress?.postalCode}
                         </p>
                       </div>
@@ -561,7 +561,7 @@ const CheckoutPage: React.FC = () => {
 
                   {/* Payment Method */}
                   <Card>
-                    <h2 className="text-lg font-semibold text-secondary-900 mb-4">
+                    <h2 className="text-lg font-semibold text-chrome-100 mb-4">
                       Payment Method
                     </h2>
 
@@ -572,7 +572,7 @@ const CheckoutPage: React.FC = () => {
                           'flex items-center gap-3 p-4 border rounded-lg cursor-pointer transition-colors',
                           watch('paymentMethod') === 'card'
                             ? 'border-primary-600 bg-primary-50'
-                            : 'border-secondary-300 hover:border-secondary-400'
+                            : 'border-chrome-600 hover:border-chrome-500'
                         )}
                       >
                         <input
@@ -581,7 +581,7 @@ const CheckoutPage: React.FC = () => {
                           value="card"
                           className="h-4 w-4 text-primary-600"
                         />
-                        <CreditCard className="h-5 w-5 text-secondary-600" />
+                        <CreditCard className="h-5 w-5 text-chrome-300" />
                         <span className="font-medium">Credit / Debit Card</span>
                       </label>
 
@@ -613,7 +613,7 @@ const CheckoutPage: React.FC = () => {
                           'flex items-center gap-3 p-4 border rounded-lg cursor-pointer transition-colors',
                           watch('paymentMethod') === 'paypal'
                             ? 'border-primary-600 bg-primary-50'
-                            : 'border-secondary-300 hover:border-secondary-400'
+                            : 'border-chrome-600 hover:border-chrome-500'
                         )}
                       >
                         <input
@@ -626,7 +626,7 @@ const CheckoutPage: React.FC = () => {
                       </label>
                     </div>
 
-                    <div className="mt-6 flex items-center gap-2 text-sm text-secondary-500">
+                    <div className="mt-6 flex items-center gap-2 text-sm text-chrome-400">
                       <ShieldCheck className="h-4 w-4" />
                       <span>Your payment information is encrypted and secure.</span>
                     </div>
@@ -656,7 +656,7 @@ const CheckoutPage: React.FC = () => {
                 <>
                   {/* Order Review */}
                   <Card>
-                    <h2 className="text-lg font-semibold text-secondary-900 mb-4">
+                    <h2 className="text-lg font-semibold text-chrome-100 mb-4">
                       Review Your Order
                     </h2>
 
@@ -666,7 +666,7 @@ const CheckoutPage: React.FC = () => {
                         const primaryImage = item.product.images?.find((img) => img.isPrimary) || item.product.images?.[0];
                         return (
                           <div key={item.id} className="flex gap-4 py-4 first:pt-0 last:pb-0">
-                            <div className="w-16 h-16 bg-secondary-100 rounded-lg overflow-hidden flex-shrink-0">
+                            <div className="w-16 h-16 bg-chrome-900 rounded-lg overflow-hidden flex-shrink-0">
                               {primaryImage ? (
                                 <img
                                   src={primaryImage.imageUrl}
@@ -674,18 +674,18 @@ const CheckoutPage: React.FC = () => {
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-secondary-400 text-xs">
+                                <div className="w-full h-full flex items-center justify-center text-chrome-500 text-xs">
                                   No Image
                                 </div>
                               )}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium text-secondary-900 line-clamp-1">
+                              <p className="font-medium text-chrome-100 line-clamp-1">
                                 {item.product.name}
                               </p>
-                              <p className="text-sm text-secondary-500">Qty: {item.quantity}</p>
+                              <p className="text-sm text-chrome-400">Qty: {item.quantity}</p>
                             </div>
-                            <p className="font-medium text-secondary-900">
+                            <p className="font-medium text-chrome-100">
                               {formatPrice(item.totalPrice)}
                             </p>
                           </div>
@@ -698,11 +698,11 @@ const CheckoutPage: React.FC = () => {
                   <div className="grid sm:grid-cols-2 gap-6">
                     <Card>
                       <div className="flex items-center gap-2 mb-3">
-                        <MapPin className="h-4 w-4 text-secondary-500" />
-                        <h3 className="font-medium text-secondary-900">Shipping Address</h3>
+                        <MapPin className="h-4 w-4 text-chrome-400" />
+                        <h3 className="font-medium text-chrome-100">Shipping Address</h3>
                       </div>
-                      <div className="text-sm text-secondary-600">
-                        <p className="font-medium text-secondary-900">
+                      <div className="text-sm text-chrome-300">
+                        <p className="font-medium text-chrome-100">
                           {shippingAddress?.firstName} {shippingAddress?.lastName}
                         </p>
                         <p>{shippingAddress?.street1}</p>
@@ -716,11 +716,11 @@ const CheckoutPage: React.FC = () => {
 
                     <Card>
                       <div className="flex items-center gap-2 mb-3">
-                        <Truck className="h-4 w-4 text-secondary-500" />
-                        <h3 className="font-medium text-secondary-900">Shipping Method</h3>
+                        <Truck className="h-4 w-4 text-chrome-400" />
+                        <h3 className="font-medium text-chrome-100">Shipping Method</h3>
                       </div>
-                      <div className="text-sm text-secondary-600">
-                        <p className="font-medium text-secondary-900">{selectedShippingRate?.name}</p>
+                      <div className="text-sm text-chrome-300">
+                        <p className="font-medium text-chrome-100">{selectedShippingRate?.name}</p>
                         <p>{selectedShippingRate?.description}</p>
                         <p className="font-medium mt-1">
                           {selectedShippingRate?.price === 0 ? 'FREE' : formatPrice(selectedShippingRate?.price || 0)}
@@ -731,12 +731,12 @@ const CheckoutPage: React.FC = () => {
 
                   {/* Order Notes */}
                   <Card>
-                    <h3 className="font-medium text-secondary-900 mb-3">Order Notes (Optional)</h3>
+                    <h3 className="font-medium text-chrome-100 mb-3">Order Notes (Optional)</h3>
                     <textarea
                       {...register('orderNotes')}
                       rows={3}
                       placeholder="Any special instructions for your order..."
-                      className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-4 py-3 border border-chrome-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     />
                   </Card>
 
@@ -764,7 +764,7 @@ const CheckoutPage: React.FC = () => {
             {/* Order Summary Sidebar */}
             <div className="lg:col-span-1">
               <Card className="sticky top-4">
-                <h2 className="text-lg font-semibold text-secondary-900 mb-4">
+                <h2 className="text-lg font-semibold text-chrome-100 mb-4">
                   Order Summary
                 </h2>
 
@@ -773,35 +773,35 @@ const CheckoutPage: React.FC = () => {
                   {cart.items.slice(0, 3).map((item) => (
                     <div key={item.id} className="flex items-center gap-3">
                       <div className="relative">
-                        <div className="w-12 h-12 bg-secondary-100 rounded-lg" />
-                        <span className="absolute -top-1 -right-1 w-5 h-5 bg-secondary-600 text-white text-xs rounded-full flex items-center justify-center">
+                        <div className="w-12 h-12 bg-chrome-900 rounded-lg" />
+                        <span className="absolute -top-1 -right-1 w-5 h-5 bg-chrome-600 text-white text-xs rounded-full flex items-center justify-center">
                           {item.quantity}
                         </span>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-secondary-900 line-clamp-1">
+                        <p className="text-sm font-medium text-chrome-100 line-clamp-1">
                           {item.product.name}
                         </p>
-                        <p className="text-sm text-secondary-500">
+                        <p className="text-sm text-chrome-400">
                           {formatPrice(item.unitPrice)}
                         </p>
                       </div>
                     </div>
                   ))}
                   {cart.items.length > 3 && (
-                    <p className="text-sm text-secondary-500">
+                    <p className="text-sm text-chrome-400">
                       +{cart.items.length - 3} more items
                     </p>
                   )}
                 </div>
 
-                <hr className="border-secondary-200 mb-4" />
+                <hr className="border-chrome-700 mb-4" />
 
                 {/* Totals */}
-                <div className="space-y-3 text-secondary-600">
+                <div className="space-y-3 text-chrome-300">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span className="font-medium text-secondary-900">
+                    <span className="font-medium text-chrome-100">
                       {formatPrice(subtotal)}
                     </span>
                   </div>
@@ -813,7 +813,7 @@ const CheckoutPage: React.FC = () => {
                   )}
                   <div className="flex justify-between">
                     <span>Shipping</span>
-                    <span className="font-medium text-secondary-900">
+                    <span className="font-medium text-chrome-100">
                       {selectedShippingRate
                         ? selectedShippingRate.price === 0
                           ? 'FREE'
@@ -823,13 +823,13 @@ const CheckoutPage: React.FC = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Tax</span>
-                    <span className="font-medium text-secondary-900">
+                    <span className="font-medium text-chrome-100">
                       {formatPrice(tax)}
                     </span>
                   </div>
                 </div>
 
-                <hr className="border-secondary-200 my-4" />
+                <hr className="border-chrome-700 my-4" />
 
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Total</span>
@@ -837,12 +837,12 @@ const CheckoutPage: React.FC = () => {
                 </div>
 
                 {/* Trust Badges */}
-                <div className="mt-6 pt-4 border-t border-secondary-200">
-                  <div className="flex items-center gap-2 text-sm text-secondary-500 mb-2">
+                <div className="mt-6 pt-4 border-t border-chrome-700">
+                  <div className="flex items-center gap-2 text-sm text-chrome-400 mb-2">
                     <Lock className="h-4 w-4" />
                     <span>Secure SSL Encryption</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-secondary-500">
+                  <div className="flex items-center gap-2 text-sm text-chrome-400">
                     <ShieldCheck className="h-4 w-4" />
                     <span>Secure Payment Processing</span>
                   </div>

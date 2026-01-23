@@ -15,8 +15,8 @@ const Badge: React.FC<BadgeProps> = ({
   className,
 }) => {
   const variants: Record<NonNullable<BadgeProps['variant']>, string> = {
-    default: 'bg-secondary-100 text-secondary-800',
-    secondary: 'bg-secondary-100 text-secondary-800',
+    default: 'bg-chrome-800 text-chrome-200',
+    secondary: 'bg-chrome-800 text-chrome-200',
     primary: 'bg-primary-100 text-primary-800',
     success: 'bg-green-100 text-green-800',
     warning: 'bg-amber-100 text-amber-800',

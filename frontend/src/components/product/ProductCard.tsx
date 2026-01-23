@@ -42,13 +42,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <Link
       to={`/shop/products/${product.slug}`}
       className={cn(
-        'group block bg-white rounded-xl border border-secondary-200 overflow-hidden',
+        'group block bg-chrome-900 rounded-xl border border-chrome-700 overflow-hidden',
         'hover:shadow-lg transition-shadow duration-300',
         className
       )}
     >
       {/* Image Container */}
-      <div className="relative aspect-square bg-secondary-100 overflow-hidden">
+      <div className="relative aspect-square bg-chrome-800 overflow-hidden">
         {primaryImage ? (
           <img
             src={primaryImage.imageUrl}
@@ -56,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-secondary-400">
+          <div className="w-full h-full flex items-center justify-center text-chrome-500">
             No Image
           </div>
         )}
@@ -84,13 +84,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={handleQuickView}
-            className="p-2 rounded-lg bg-white shadow-md text-secondary-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
+            className="p-2 rounded-lg bg-chrome-900 shadow-md text-chrome-300 hover:text-primary-600 hover:bg-primary-50 transition-colors"
             aria-label="Quick view"
           >
             <Eye className="h-5 w-5" />
           </button>
           <button
-            className="p-2 rounded-lg bg-white shadow-md text-secondary-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+            className="p-2 rounded-lg bg-chrome-900 shadow-md text-chrome-300 hover:text-red-600 hover:bg-red-50 transition-colors"
             aria-label="Add to wishlist"
           >
             <Heart className="h-5 w-5" />
@@ -100,7 +100,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Out of Stock Overlay */}
         {!isInStock && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <Badge variant="default" size="lg" className="bg-white text-secondary-900">
+            <Badge variant="default" size="lg" className="bg-chrome-900 text-chrome-100">
               Out of Stock
             </Badge>
           </div>
@@ -111,13 +111,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="p-4">
         {/* Brand */}
         {product.brand && (
-          <p className="text-xs text-secondary-500 uppercase tracking-wider mb-1">
+          <p className="text-xs text-chrome-400 uppercase tracking-wider mb-1">
             {product.brand.name}
           </p>
         )}
 
         {/* Title */}
-        <h3 className="font-medium text-secondary-900 line-clamp-2 mb-2 group-hover:text-primary-600 transition-colors">
+        <h3 className="font-medium text-chrome-100 line-clamp-2 mb-2 group-hover:text-primary-600 transition-colors">
           {product.name}
         </h3>
 
@@ -138,7 +138,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             {formatPrice(currentPrice)}
           </span>
           {isOnSale && (
-            <span className="text-sm text-secondary-400 line-through">
+            <span className="text-sm text-chrome-500 line-through">
               {formatPrice(product.retailPrice)}
             </span>
           )}

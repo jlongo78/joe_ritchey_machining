@@ -64,7 +64,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
         className={cn(
           buttonBaseStyles,
-          'text-secondary-600 hover:bg-secondary-100',
+          'text-chrome-300 hover:bg-chrome-800',
           'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent'
         )}
         aria-label="Previous page"
@@ -79,7 +79,7 @@ const Pagination: React.FC<PaginationProps> = ({
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="flex items-center justify-center h-10 w-10 text-secondary-400"
+                className="flex items-center justify-center h-10 w-10 text-chrome-500"
               >
                 <MoreHorizontal className="h-4 w-4" />
               </span>
@@ -96,7 +96,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 buttonBaseStyles,
                 isActive
                   ? 'bg-primary-600 text-white hover:bg-primary-700'
-                  : 'text-secondary-600 hover:bg-secondary-100'
+                  : 'text-chrome-300 hover:bg-chrome-800'
               )}
               aria-current={isActive ? 'page' : undefined}
             >
@@ -112,7 +112,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === totalPages}
         className={cn(
           buttonBaseStyles,
-          'text-secondary-600 hover:bg-secondary-100',
+          'text-chrome-300 hover:bg-chrome-800',
           'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent'
         )}
         aria-label="Next page"

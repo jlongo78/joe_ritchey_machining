@@ -27,10 +27,10 @@ export interface LoadingOverlayProps {
 
 const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ message = 'Loading...' }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-chrome-900/80 backdrop-blur-sm">
       <div className="flex flex-col items-center gap-4">
         <LoadingSpinner size="lg" />
-        <p className="text-secondary-600 font-medium">{message}</p>
+        <p className="text-chrome-300 font-medium">{message}</p>
       </div>
     </div>
   );
@@ -44,7 +44,7 @@ const PageLoading: React.FC<PageLoadingProps> = ({ message }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
       <LoadingSpinner size="lg" />
-      {message && <p className="text-secondary-600">{message}</p>}
+      {message && <p className="text-chrome-300">{message}</p>}
     </div>
   );
 };

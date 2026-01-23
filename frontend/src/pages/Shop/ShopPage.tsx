@@ -185,18 +185,18 @@ const ShopPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-black">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-secondary-200">
+      <div className="bg-chrome-900 border-b border-chrome-700">
         <div className="container mx-auto px-4 py-3">
-          <nav className="text-sm text-secondary-500">
+          <nav className="text-sm text-chrome-400">
             <Link to="/" className="hover:text-primary-600">Home</Link>
             <span className="mx-2">/</span>
-            <span className="text-secondary-900">Parts Shop</span>
+            <span className="text-chrome-100">Parts Shop</span>
             {filters.search && (
               <>
                 <span className="mx-2">/</span>
-                <span className="text-secondary-900">Search: &quot;{filters.search}&quot;</span>
+                <span className="text-chrome-100">Search: &quot;{filters.search}&quot;</span>
               </>
             )}
           </nav>
@@ -221,10 +221,10 @@ const ShopPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
-                <h1 className="text-2xl font-bold text-secondary-900">
+                <h1 className="text-2xl font-bold text-chrome-100">
                   {filters.search ? `Search Results for "${filters.search}"` : 'Performance Parts'}
                 </h1>
-                <p className="text-secondary-500 mt-1">
+                <p className="text-chrome-400 mt-1">
                   {totalProducts} {totalProducts === 1 ? 'product' : 'products'} found
                 </p>
               </div>
@@ -243,7 +243,7 @@ const ShopPage: React.FC = () => {
 
                 {/* Sort */}
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-secondary-500 hidden sm:inline">Sort by:</span>
+                  <span className="text-sm text-chrome-400 hidden sm:inline">Sort by:</span>
                   <Select
                     options={sortOptions}
                     value={filters.sortBy || 'newest'}
@@ -253,14 +253,14 @@ const ShopPage: React.FC = () => {
                 </div>
 
                 {/* View Mode */}
-                <div className="hidden sm:flex items-center border border-secondary-300 rounded-lg p-1">
+                <div className="hidden sm:flex items-center border border-chrome-600 rounded-lg p-1">
                   <button
                     onClick={() => setViewMode('grid')}
                     className={cn(
                       'p-1.5 rounded',
                       viewMode === 'grid'
-                        ? 'bg-secondary-100 text-secondary-900'
-                        : 'text-secondary-400 hover:text-secondary-600'
+                        ? 'bg-chrome-900 text-chrome-100'
+                        : 'text-chrome-500 hover:text-chrome-300'
                     )}
                     aria-label="Grid view"
                   >
@@ -271,8 +271,8 @@ const ShopPage: React.FC = () => {
                     className={cn(
                       'p-1.5 rounded',
                       viewMode === 'list'
-                        ? 'bg-secondary-100 text-secondary-900'
-                        : 'text-secondary-400 hover:text-secondary-600'
+                        ? 'bg-chrome-900 text-chrome-100'
+                        : 'text-chrome-500 hover:text-chrome-300'
                     )}
                     aria-label="List view"
                   >
@@ -334,12 +334,12 @@ const ShopPage: React.FC = () => {
             className="absolute inset-0 bg-black/50"
             onClick={() => setShowMobileFilters(false)}
           />
-          <div className="absolute inset-y-0 right-0 w-full max-w-sm bg-white">
-            <div className="flex items-center justify-between p-4 border-b border-secondary-200">
+          <div className="absolute inset-y-0 right-0 w-full max-w-sm bg-chrome-900">
+            <div className="flex items-center justify-between p-4 border-b border-chrome-700">
               <h2 className="font-semibold text-lg">Filters</h2>
               <button
                 onClick={() => setShowMobileFilters(false)}
-                className="p-2 text-secondary-500 hover:text-secondary-700"
+                className="p-2 text-chrome-400 hover:text-chrome-300"
               >
                 <X className="h-5 w-5" />
               </button>

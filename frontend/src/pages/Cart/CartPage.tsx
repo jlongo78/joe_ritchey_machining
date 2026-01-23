@@ -66,7 +66,7 @@ const CartPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-secondary-50 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="animate-spin h-8 w-8 border-4 border-primary-600 border-t-transparent rounded-full" />
       </div>
     );
@@ -74,7 +74,7 @@ const CartPage: React.FC = () => {
 
   if (!cart || cart.items.length === 0) {
     return (
-      <div className="min-h-screen bg-secondary-50">
+      <div className="min-h-screen bg-black">
         <div className="container mx-auto px-4 py-16">
           <EmptyState
             icon={<ShoppingCart className="h-16 w-16" />}
@@ -94,20 +94,20 @@ const CartPage: React.FC = () => {
   const remainingForFreeShipping = Math.max(0, freeShippingThreshold - cart.subtotal);
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-black">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-secondary-200">
+      <div className="bg-chrome-900 border-b border-chrome-700">
         <div className="container mx-auto px-4 py-3">
-          <nav className="text-sm text-secondary-500">
+          <nav className="text-sm text-chrome-400">
             <Link to="/" className="hover:text-primary-600">Home</Link>
             <span className="mx-2">/</span>
-            <span className="text-secondary-900">Shopping Cart</span>
+            <span className="text-chrome-100">Shopping Cart</span>
           </nav>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-secondary-900 mb-8">Shopping Cart</h1>
+        <h1 className="text-3xl font-bold text-chrome-100 mb-8">Shopping Cart</h1>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
@@ -141,7 +141,7 @@ const CartPage: React.FC = () => {
                         {/* Product Image */}
                         <Link
                           to={`/shop/products/${item.product.slug}`}
-                          className="flex-shrink-0 w-24 h-24 bg-secondary-100 rounded-lg overflow-hidden"
+                          className="flex-shrink-0 w-24 h-24 bg-chrome-900 rounded-lg overflow-hidden"
                         >
                           {primaryImage ? (
                             <img
@@ -150,7 +150,7 @@ const CartPage: React.FC = () => {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-secondary-400 text-xs">
+                            <div className="w-full h-full flex items-center justify-center text-chrome-500 text-xs">
                               No Image
                             </div>
                           )}
@@ -160,16 +160,16 @@ const CartPage: React.FC = () => {
                         <div className="flex-1 min-w-0">
                           <Link
                             to={`/shop/products/${item.product.slug}`}
-                            className="font-medium text-secondary-900 hover:text-primary-600 line-clamp-2"
+                            className="font-medium text-chrome-100 hover:text-primary-600 line-clamp-2"
                           >
                             {item.product.name}
                           </Link>
                           {item.product.brand && (
-                            <p className="text-sm text-secondary-500 mt-1">
+                            <p className="text-sm text-chrome-400 mt-1">
                               {item.product.brand.name}
                             </p>
                           )}
-                          <p className="text-sm text-secondary-400 mt-1">
+                          <p className="text-sm text-chrome-500 mt-1">
                             SKU: {item.product.sku}
                           </p>
 
@@ -189,7 +189,7 @@ const CartPage: React.FC = () => {
                             />
                             <button
                               onClick={() => handleRemoveItem(item.id, item.product.name)}
-                              className="p-2 text-secondary-400 hover:text-red-600"
+                              className="p-2 text-chrome-500 hover:text-red-600"
                             >
                               <Trash2 className="h-5 w-5" />
                             </button>
@@ -200,15 +200,15 @@ const CartPage: React.FC = () => {
                         <div className="hidden sm:flex items-start gap-8">
                           {/* Unit Price */}
                           <div className="text-right">
-                            <p className="text-sm text-secondary-500">Price</p>
-                            <p className="font-medium text-secondary-900">
+                            <p className="text-sm text-chrome-400">Price</p>
+                            <p className="font-medium text-chrome-100">
                               {formatPrice(item.unitPrice)}
                             </p>
                           </div>
 
                           {/* Quantity */}
                           <div>
-                            <p className="text-sm text-secondary-500 mb-2">Qty</p>
+                            <p className="text-sm text-chrome-400 mb-2">Qty</p>
                             <QuantitySelector
                               value={item.quantity}
                               onChange={(qty) => handleQuantityChange(item.id, qty)}
@@ -218,7 +218,7 @@ const CartPage: React.FC = () => {
 
                           {/* Total */}
                           <div className="text-right w-24">
-                            <p className="text-sm text-secondary-500">Total</p>
+                            <p className="text-sm text-chrome-400">Total</p>
                             <p className="font-semibold text-primary-600">
                               {formatPrice(item.totalPrice)}
                             </p>
@@ -227,7 +227,7 @@ const CartPage: React.FC = () => {
                           {/* Remove */}
                           <button
                             onClick={() => handleRemoveItem(item.id, item.product.name)}
-                            className="p-2 text-secondary-400 hover:text-red-600"
+                            className="p-2 text-chrome-500 hover:text-red-600"
                             aria-label="Remove item"
                           >
                             <Trash2 className="h-5 w-5" />
@@ -255,7 +255,7 @@ const CartPage: React.FC = () => {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <Card>
-              <h2 className="text-lg font-semibold text-secondary-900 mb-4">
+              <h2 className="text-lg font-semibold text-chrome-100 mb-4">
                 Order Summary
               </h2>
 
@@ -293,10 +293,10 @@ const CartPage: React.FC = () => {
               </div>
 
               {/* Summary Lines */}
-              <div className="space-y-3 text-secondary-600">
+              <div className="space-y-3 text-chrome-300">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span className="font-medium text-secondary-900">
+                  <span className="font-medium text-chrome-100">
                     {formatPrice(cart.subtotal)}
                   </span>
                 </div>
@@ -308,7 +308,7 @@ const CartPage: React.FC = () => {
                 )}
                 <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span className="font-medium text-secondary-900">
+                  <span className="font-medium text-chrome-100">
                     {cart.subtotal >= freeShippingThreshold ? (
                       <span className="text-green-600">FREE</span>
                     ) : (
@@ -318,13 +318,13 @@ const CartPage: React.FC = () => {
                 </div>
                 <div className="flex justify-between">
                   <span>Tax</span>
-                  <span className="text-secondary-900">
+                  <span className="text-chrome-100">
                     Calculated at checkout
                   </span>
                 </div>
               </div>
 
-              <hr className="my-4 border-secondary-200" />
+              <hr className="my-4 border-chrome-700" />
 
               {/* Estimated Total */}
               <div className="flex justify-between text-lg font-semibold">
@@ -343,8 +343,8 @@ const CartPage: React.FC = () => {
               </Button>
 
               {/* Trust Badges */}
-              <div className="mt-6 pt-6 border-t border-secondary-200">
-                <div className="flex items-center justify-center gap-4 text-secondary-400">
+              <div className="mt-6 pt-6 border-t border-chrome-700">
+                <div className="flex items-center justify-center gap-4 text-chrome-500">
                   <div className="text-center">
                     <Truck className="h-6 w-6 mx-auto mb-1" />
                     <span className="text-xs">Free Shipping</span>

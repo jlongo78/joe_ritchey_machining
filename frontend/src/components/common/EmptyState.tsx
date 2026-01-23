@@ -28,11 +28,11 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       )}
     >
       {icon && (
-        <div className="mb-4 text-secondary-300">{icon}</div>
+        <div className="mb-4 text-chrome-400">{icon}</div>
       )}
-      <h3 className="text-lg font-medium text-secondary-900 mb-2">{title}</h3>
+      <h3 className="text-lg font-medium text-chrome-100 mb-2">{title}</h3>
       {description && (
-        <p className="text-secondary-500 max-w-md mb-6">{description}</p>
+        <p className="text-chrome-400 max-w-md mb-6">{description}</p>
       )}
       {action && (
         <Button onClick={action.onClick}>{action.label}</Button>

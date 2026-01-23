@@ -111,8 +111,8 @@ const ProductDetailPage: React.FC = () => {
   if (!product) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold text-secondary-900 mb-4">Product Not Found</h1>
-        <p className="text-secondary-500 mb-6">The product you&apos;re looking for doesn&apos;t exist.</p>
+        <h1 className="text-2xl font-bold text-chrome-100 mb-4">Product Not Found</h1>
+        <p className="text-chrome-400 mb-6">The product you&apos;re looking for doesn&apos;t exist.</p>
         <Link to="/shop">
           <Button>Back to Shop</Button>
         </Link>
@@ -126,11 +126,11 @@ const ProductDetailPage: React.FC = () => {
   const images = product.images.length > 0 ? product.images : [{ id: 0, productId: product.id, imageUrl: 'https://placehold.co/600x600/e2e8f0/64748b?text=No+Image', isPrimary: true, displayOrder: 0 }];
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-chrome-900 min-h-screen">
       {/* Breadcrumb */}
-      <div className="bg-secondary-50 border-b border-secondary-200">
+      <div className="bg-black border-b border-chrome-700">
         <div className="container mx-auto px-4 py-3">
-          <nav className="text-sm text-secondary-500">
+          <nav className="text-sm text-chrome-400">
             <Link to="/" className="hover:text-primary-600">Home</Link>
             <span className="mx-2">/</span>
             <Link to="/shop" className="hover:text-primary-600">Parts Shop</Link>
@@ -143,7 +143,7 @@ const ProductDetailPage: React.FC = () => {
               </>
             )}
             <span className="mx-2">/</span>
-            <span className="text-secondary-900">{product.name}</span>
+            <span className="text-chrome-100">{product.name}</span>
           </nav>
         </div>
       </div>
@@ -153,7 +153,7 @@ const ProductDetailPage: React.FC = () => {
           {/* Image Gallery */}
           <div>
             {/* Main Image */}
-            <div className="relative aspect-square bg-secondary-100 rounded-xl overflow-hidden mb-4">
+            <div className="relative aspect-square bg-chrome-900 rounded-xl overflow-hidden mb-4">
               <img
                 src={images[selectedImageIndex].imageUrl}
                 alt={images[selectedImageIndex].altText || product.name}
@@ -163,13 +163,13 @@ const ProductDetailPage: React.FC = () => {
                 <>
                   <button
                     onClick={() => setSelectedImageIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1))}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-md hover:bg-white"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-chrome-900/80 rounded-full shadow-md hover:bg-chrome-900"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => setSelectedImageIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0))}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-md hover:bg-white"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-chrome-900/80 rounded-full shadow-md hover:bg-chrome-900"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>
@@ -194,7 +194,7 @@ const ProductDetailPage: React.FC = () => {
                       'flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors',
                       selectedImageIndex === index
                         ? 'border-primary-500'
-                        : 'border-transparent hover:border-secondary-300'
+                        : 'border-transparent hover:border-chrome-600'
                     )}
                   >
                     <img
@@ -219,7 +219,7 @@ const ProductDetailPage: React.FC = () => {
                 {product.brand.name}
               </Link>
             )}
-            <h1 className="text-3xl font-bold text-secondary-900 mt-2 mb-4">
+            <h1 className="text-3xl font-bold text-chrome-100 mt-2 mb-4">
               {product.name}
             </h1>
 
@@ -241,7 +241,7 @@ const ProductDetailPage: React.FC = () => {
               </span>
               {isOnSale && (
                 <>
-                  <span className="text-xl text-secondary-400 line-through">
+                  <span className="text-xl text-chrome-500 line-through">
                     {formatPrice(product.retailPrice)}
                   </span>
                   <Badge variant="danger">
@@ -253,7 +253,7 @@ const ProductDetailPage: React.FC = () => {
 
             {/* Short Description */}
             {product.shortDescription && (
-              <p className="text-secondary-600 mb-6">{product.shortDescription}</p>
+              <p className="text-chrome-300 mb-6">{product.shortDescription}</p>
             )}
 
             {/* Stock Status */}
@@ -262,7 +262,7 @@ const ProductDetailPage: React.FC = () => {
                 <>
                   <Check className="h-5 w-5 text-green-500" />
                   <span className="text-green-600 font-medium">In Stock</span>
-                  <span className="text-secondary-400">
+                  <span className="text-chrome-500">
                     ({product.inventory?.quantityAvailable} available)
                   </span>
                 </>
@@ -274,7 +274,7 @@ const ProductDetailPage: React.FC = () => {
             {/* Quantity & Add to Cart */}
             <div className="flex items-center gap-4 mb-6">
               <div className="flex items-center gap-3">
-                <span className="text-secondary-600">Qty:</span>
+                <span className="text-chrome-300">Qty:</span>
                 <QuantitySelector
                   value={quantity}
                   onChange={setQuantity}
@@ -295,34 +295,34 @@ const ProductDetailPage: React.FC = () => {
 
             {/* Actions */}
             <div className="flex items-center gap-4 mb-8">
-              <button className="flex items-center gap-2 text-secondary-600 hover:text-primary-600">
+              <button className="flex items-center gap-2 text-chrome-300 hover:text-primary-600">
                 <Heart className="h-5 w-5" />
                 Add to Wishlist
               </button>
-              <button className="flex items-center gap-2 text-secondary-600 hover:text-primary-600">
+              <button className="flex items-center gap-2 text-chrome-300 hover:text-primary-600">
                 <Share2 className="h-5 w-5" />
                 Share
               </button>
             </div>
 
             {/* Benefits */}
-            <div className="border-t border-secondary-200 pt-6 space-y-4">
+            <div className="border-t border-chrome-700 pt-6 space-y-4">
               <div className="flex items-center gap-3">
                 <Truck className="h-5 w-5 text-primary-600" />
-                <span className="text-secondary-700">Free shipping on orders over $99</span>
+                <span className="text-chrome-300">Free shipping on orders over $99</span>
               </div>
               <div className="flex items-center gap-3">
                 <Shield className="h-5 w-5 text-primary-600" />
-                <span className="text-secondary-700">Manufacturer warranty included</span>
+                <span className="text-chrome-300">Manufacturer warranty included</span>
               </div>
               <div className="flex items-center gap-3">
                 <RotateCcw className="h-5 w-5 text-primary-600" />
-                <span className="text-secondary-700">30-day hassle-free returns</span>
+                <span className="text-chrome-300">30-day hassle-free returns</span>
               </div>
             </div>
 
             {/* SKU */}
-            <div className="mt-6 text-sm text-secondary-500">
+            <div className="mt-6 text-sm text-chrome-400">
               SKU: {product.sku}
             </div>
           </div>
@@ -330,7 +330,7 @@ const ProductDetailPage: React.FC = () => {
 
         {/* Tabs */}
         <div className="mt-12">
-          <div className="border-b border-secondary-200">
+          <div className="border-b border-chrome-700">
             <nav className="flex gap-8">
               {[
                 { key: 'description', label: 'Description' },
@@ -344,7 +344,7 @@ const ProductDetailPage: React.FC = () => {
                     'py-4 font-medium border-b-2 transition-colors',
                     activeTab === tab.key
                       ? 'border-primary-600 text-primary-600'
-                      : 'border-transparent text-secondary-500 hover:text-secondary-700'
+                      : 'border-transparent text-chrome-400 hover:text-chrome-300'
                   )}
                 >
                   {tab.label}
@@ -356,7 +356,7 @@ const ProductDetailPage: React.FC = () => {
           <div className="py-8">
             {activeTab === 'description' && product.description && (
               <div
-                className="prose max-w-none text-secondary-700"
+                className="prose max-w-none text-chrome-300"
                 dangerouslySetInnerHTML={{ __html: product.description }}
               />
             )}
@@ -368,12 +368,12 @@ const ProductDetailPage: React.FC = () => {
                     {product.attributes.map((attr, index) => (
                       <tr
                         key={attr.id}
-                        className={cn(index % 2 === 0 ? 'bg-secondary-50' : '')}
+                        className={cn(index % 2 === 0 ? 'bg-black' : '')}
                       >
-                        <td className="py-3 px-4 font-medium text-secondary-900">
+                        <td className="py-3 px-4 font-medium text-chrome-100">
                           {attr.attributeName}
                         </td>
-                        <td className="py-3 px-4 text-secondary-600">
+                        <td className="py-3 px-4 text-chrome-300">
                           {attr.attributeValue}
                         </td>
                       </tr>
@@ -384,7 +384,7 @@ const ProductDetailPage: React.FC = () => {
             )}
 
             {activeTab === 'reviews' && (
-              <div className="text-center py-8 text-secondary-500">
+              <div className="text-center py-8 text-chrome-400">
                 Reviews coming soon...
               </div>
             )}

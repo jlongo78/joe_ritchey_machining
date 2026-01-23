@@ -154,7 +154,7 @@ const JobsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-secondary-900">Active Jobs</h1>
+        <h1 className="text-2xl font-bold text-chrome-100">Active Jobs</h1>
         <Link to="/services/request">
           <Button size="sm" leftIcon={<Wrench className="h-4 w-4" />}>
             New Request
@@ -193,13 +193,13 @@ const JobsPage: React.FC = () => {
                 <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="font-semibold text-secondary-900">{job.jobNumber}</h3>
+                      <h3 className="font-semibold text-chrome-100">{job.jobNumber}</h3>
                       <Badge variant={getStatusColor(job.status)}>
                         {getStatusLabel(job.status)}
                       </Badge>
                     </div>
-                    <p className="text-secondary-700 mb-2">{job.description}</p>
-                    <div className="flex flex-wrap gap-4 text-sm text-secondary-500">
+                    <p className="text-chrome-300 mb-2">{job.description}</p>
+                    <div className="flex flex-wrap gap-4 text-sm text-chrome-400">
                       <span>Started: {formatDate(job.createdAt)}</span>
                       {job.scheduledEndDate && (
                         <span className="flex items-center gap-1">
@@ -219,12 +219,12 @@ const JobsPage: React.FC = () => {
                     {progress && (
                       <div className="mt-4">
                         <div className="flex items-center justify-between text-sm mb-1">
-                          <span className="text-secondary-600">Progress</span>
-                          <span className="font-medium text-secondary-900">
+                          <span className="text-chrome-300">Progress</span>
+                          <span className="font-medium text-chrome-100">
                             {progress.completed} of {progress.total} tasks
                           </span>
                         </div>
-                        <div className="h-2 bg-secondary-200 rounded-full overflow-hidden">
+                        <div className="h-2 bg-chrome-700 rounded-full overflow-hidden">
                           <div
                             className="h-full bg-primary-600 rounded-full transition-all"
                             style={{ width: `${progress.percent}%` }}
@@ -236,7 +236,7 @@ const JobsPage: React.FC = () => {
 
                   <div className="flex flex-col items-end gap-2">
                     <div className="text-right">
-                      <p className="text-sm text-secondary-500">Estimated Total</p>
+                      <p className="text-sm text-chrome-400">Estimated Total</p>
                       <p className="text-xl font-bold text-primary-600">{formatPrice(job.actualTotal)}</p>
                     </div>
                     <Link to={`/account/jobs/${job.id}`}>
@@ -249,8 +249,8 @@ const JobsPage: React.FC = () => {
 
                 {/* Task List Preview */}
                 {job.tasks && job.tasks.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-secondary-200">
-                    <p className="text-sm font-medium text-secondary-700 mb-2">Tasks</p>
+                  <div className="mt-4 pt-4 border-t border-chrome-700">
+                    <p className="text-sm font-medium text-chrome-300 mb-2">Tasks</p>
                     <div className="flex flex-wrap gap-2">
                       {job.tasks.slice(0, 5).map((task) => (
                         <span
@@ -260,7 +260,7 @@ const JobsPage: React.FC = () => {
                               ? 'bg-green-100 text-green-700'
                               : task.status === 'in_progress'
                               ? 'bg-blue-100 text-blue-700'
-                              : 'bg-secondary-100 text-secondary-600'
+                              : 'bg-chrome-900 text-chrome-300'
                           }`}
                         >
                           {task.status === 'completed' && <CheckCircle className="h-3 w-3" />}
@@ -268,7 +268,7 @@ const JobsPage: React.FC = () => {
                         </span>
                       ))}
                       {job.tasks.length > 5 && (
-                        <span className="text-xs text-secondary-500">
+                        <span className="text-xs text-chrome-400">
                           +{job.tasks.length - 5} more
                         </span>
                       )}

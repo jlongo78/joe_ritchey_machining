@@ -28,7 +28,7 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label }) => (
         'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors',
         isActive
           ? 'bg-primary-50 text-primary-700 font-medium'
-          : 'text-secondary-600 hover:bg-secondary-50 hover:text-secondary-900'
+          : 'text-chrome-300 hover:bg-black hover:text-chrome-100'
       )
     }
   >
@@ -49,14 +49,14 @@ const AccountLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-black">
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Sidebar */}
           <aside className="lg:col-span-1">
             <Card>
               {/* User Info */}
-              <div className="flex items-center gap-4 mb-6 pb-6 border-b border-secondary-200">
+              <div className="flex items-center gap-4 mb-6 pb-6 border-b border-chrome-700">
                 <div className="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center">
                   <span className="text-xl font-semibold text-primary-700">
                     {user?.firstName?.[0]}
@@ -64,10 +64,10 @@ const AccountLayout: React.FC = () => {
                   </span>
                 </div>
                 <div>
-                  <p className="font-semibold text-secondary-900">
+                  <p className="font-semibold text-chrome-100">
                     {user?.firstName} {user?.lastName}
                   </p>
-                  <p className="text-sm text-secondary-500">{user?.email}</p>
+                  <p className="text-sm text-chrome-400">{user?.email}</p>
                 </div>
               </div>
 
@@ -111,10 +111,10 @@ const AccountLayout: React.FC = () => {
               </nav>
 
               {/* Logout */}
-              <div className="mt-6 pt-6 border-t border-secondary-200">
+              <div className="mt-6 pt-6 border-t border-chrome-700">
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-3 px-4 py-3 w-full text-left text-secondary-600 hover:bg-secondary-50 hover:text-secondary-900 rounded-lg transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 w-full text-left text-chrome-300 hover:bg-black hover:text-chrome-100 rounded-lg transition-colors"
                 >
                   <LogOut className="h-5 w-5" />
                   <span>Sign Out</span>

@@ -51,7 +51,7 @@ const HomePage: React.FC = () => {
                     variant="outline"
                     size="lg"
                     leftIcon={<Wrench className="h-5 w-5" />}
-                    className="border-white text-white hover:bg-white/10"
+                    className="border-white text-white hover:bg-chrome-900/10"
                   >
                     Request Service Quote
                   </Button>
@@ -69,7 +69,7 @@ const HomePage: React.FC = () => {
               ].map((stat, index) => (
                 <div
                   key={index}
-                  className="bg-white/5 backdrop-blur border border-chrome-800 rounded-xl p-6 text-center"
+                  className="bg-chrome-900/5 backdrop-blur border border-chrome-800 rounded-xl p-6 text-center"
                 >
                   <stat.icon className="h-8 w-8 text-electric-400 mx-auto mb-3" />
                   <div className="text-3xl font-bold text-white mb-1">
@@ -373,7 +373,7 @@ const HomePage: React.FC = () => {
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="bg-white text-electric-700 hover:bg-chrome-100"
+                  className="bg-chrome-900 text-electric-700 hover:bg-chrome-100"
                 >
                   Shop Parts Now
                 </Button>
@@ -382,7 +382,7 @@ const HomePage: React.FC = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white text-white hover:bg-white/10"
+                  className="border-white text-white hover:bg-chrome-900/10"
                 >
                   Request Service Quote
                 </Button>

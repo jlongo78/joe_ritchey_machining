@@ -64,8 +64,8 @@ const Header: React.FC = () => {
               <Phone className="h-4 w-4" />
               (555) 123-4567
             </a>
-            <span className="hidden sm:inline text-secondary-400">|</span>
-            <span className="hidden sm:inline text-secondary-400">
+            <span className="hidden sm:inline text-chrome-500">|</span>
+            <span className="hidden sm:inline text-chrome-500">
               Mon-Fri: 8AM-6PM | Sat: 9AM-2PM
             </span>
           </div>

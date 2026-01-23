@@ -40,7 +40,7 @@ const Rating: React.FC<RatingProps> = ({
         <span key={i} className="relative">
           {/* Background star (empty) */}
           <Star
-            className={cn(sizeConfig.star, 'text-secondary-200')}
+            className={cn(sizeConfig.star, 'text-chrome-600')}
             fill="currentColor"
           />
           {/* Foreground star (filled) */}
@@ -68,12 +68,12 @@ const Rating: React.FC<RatingProps> = ({
     <div className={cn('flex items-center gap-1.5', className)}>
       <div className="flex items-center gap-0.5">{renderStars()}</div>
       {showValue && (
-        <span className={cn('font-medium text-secondary-700', sizeConfig.text)}>
+        <span className={cn('font-medium text-chrome-300', sizeConfig.text)}>
           {value.toFixed(1)}
         </span>
       )}
       {reviewCount !== undefined && (
-        <span className={cn('text-secondary-500', sizeConfig.text)}>
+        <span className={cn('text-chrome-400', sizeConfig.text)}>
           ({reviewCount} {reviewCount === 1 ? 'review' : 'reviews'})
         </span>
       )}
@@ -125,7 +125,7 @@ const RatingInput: React.FC<RatingInputProps> = ({
           <Star
             className={cn(
               sizes[size],
-              rating <= displayValue ? 'text-amber-400' : 'text-secondary-200'
+              rating <= displayValue ? 'text-amber-400' : 'text-chrome-600'
             )}
             fill="currentColor"
           />

@@ -83,12 +83,12 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
   }, [filters.minPrice, filters.maxPrice]);
 
   return (
-    <div className={cn('bg-white rounded-xl border border-secondary-200', className)}>
+    <div className={cn('bg-chrome-900 rounded-xl border border-chrome-700', className)}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-secondary-200">
+      <div className="flex items-center justify-between p-4 border-b border-chrome-700">
         <div className="flex items-center gap-2">
-          <Filter className="h-5 w-5 text-secondary-600" />
-          <h3 className="font-semibold text-secondary-900">Filters</h3>
+          <Filter className="h-5 w-5 text-chrome-300" />
+          <h3 className="font-semibold text-chrome-100">Filters</h3>
           {activeFiltersCount > 0 && (
             <span className="px-2 py-0.5 bg-primary-100 text-primary-700 text-sm font-medium rounded-full">
               {activeFiltersCount}
@@ -106,15 +106,15 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
       </div>
 
       {/* Categories */}
-      <div className="border-b border-secondary-200">
+      <div className="border-b border-chrome-700">
         <button
           onClick={() => toggleSection('categories')}
           className="flex items-center justify-between w-full p-4 text-left"
         >
-          <span className="font-medium text-secondary-900">Categories</span>
+          <span className="font-medium text-chrome-100">Categories</span>
           <ChevronDown
             className={cn(
-              'h-5 w-5 text-secondary-400 transition-transform',
+              'h-5 w-5 text-chrome-500 transition-transform',
               expandedSections.includes('categories') && 'rotate-180'
             )}
           />
@@ -130,9 +130,9 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
                   type="checkbox"
                   checked={filters.categoryId === category.id}
                   onChange={() => handleCategoryChange(category.id)}
-                  className="h-4 w-4 rounded border-secondary-300 text-primary-600 focus:ring-primary-500"
+                  className="h-4 w-4 rounded border-chrome-600 text-primary-600 focus:ring-primary-500"
                 />
-                <span className="text-secondary-700 group-hover:text-secondary-900">
+                <span className="text-chrome-300 group-hover:text-chrome-100">
                   {category.name}
                 </span>
               </label>
@@ -142,15 +142,15 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
       </div>
 
       {/* Brands */}
-      <div className="border-b border-secondary-200">
+      <div className="border-b border-chrome-700">
         <button
           onClick={() => toggleSection('brands')}
           className="flex items-center justify-between w-full p-4 text-left"
         >
-          <span className="font-medium text-secondary-900">Brands</span>
+          <span className="font-medium text-chrome-100">Brands</span>
           <ChevronDown
             className={cn(
-              'h-5 w-5 text-secondary-400 transition-transform',
+              'h-5 w-5 text-chrome-500 transition-transform',
               expandedSections.includes('brands') && 'rotate-180'
             )}
           />
@@ -166,9 +166,9 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
                   type="checkbox"
                   checked={filters.brandId === brand.id}
                   onChange={() => handleBrandChange(brand.id)}
-                  className="h-4 w-4 rounded border-secondary-300 text-primary-600 focus:ring-primary-500"
+                  className="h-4 w-4 rounded border-chrome-600 text-primary-600 focus:ring-primary-500"
                 />
-                <span className="text-secondary-700 group-hover:text-secondary-900">
+                <span className="text-chrome-300 group-hover:text-chrome-100">
                   {brand.name}
                 </span>
               </label>
@@ -178,15 +178,15 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
       </div>
 
       {/* Price Range */}
-      <div className="border-b border-secondary-200">
+      <div className="border-b border-chrome-700">
         <button
           onClick={() => toggleSection('price')}
           className="flex items-center justify-between w-full p-4 text-left"
         >
-          <span className="font-medium text-secondary-900">Price Range</span>
+          <span className="font-medium text-chrome-100">Price Range</span>
           <ChevronDown
             className={cn(
-              'h-5 w-5 text-secondary-400 transition-transform',
+              'h-5 w-5 text-chrome-500 transition-transform',
               expandedSections.includes('price') && 'rotate-180'
             )}
           />
@@ -201,7 +201,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
                 onChange={(e) => setMinPrice(e.target.value)}
                 className="text-sm"
               />
-              <span className="text-secondary-400">-</span>
+              <span className="text-chrome-500">-</span>
               <Input
                 type="number"
                 placeholder="Max"
@@ -224,9 +224,9 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
             type="checkbox"
             checked={filters.inStock || false}
             onChange={handleInStockChange}
-            className="h-4 w-4 rounded border-secondary-300 text-primary-600 focus:ring-primary-500"
+            className="h-4 w-4 rounded border-chrome-600 text-primary-600 focus:ring-primary-500"
           />
-          <span className="text-secondary-700">In Stock Only</span>
+          <span className="text-chrome-300">In Stock Only</span>
         </label>
       </div>
     </div>

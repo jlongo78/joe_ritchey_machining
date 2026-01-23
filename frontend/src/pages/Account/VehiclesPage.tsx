@@ -174,7 +174,7 @@ const VehiclesPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-secondary-900">My Vehicles</h1>
+        <h1 className="text-2xl font-bold text-chrome-100">My Vehicles</h1>
         <Button
           size="sm"
           leftIcon={<Plus className="h-4 w-4" />}
@@ -191,34 +191,34 @@ const VehiclesPage: React.FC = () => {
             <Card key={vehicle.id}>
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 bg-secondary-100 rounded-lg flex items-center justify-center">
-                    <Car className="h-7 w-7 text-secondary-500" />
+                  <div className="w-14 h-14 bg-chrome-900 rounded-lg flex items-center justify-center">
+                    <Car className="h-7 w-7 text-chrome-400" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-secondary-900">
+                    <h3 className="font-semibold text-chrome-100">
                       {vehicle.year} {vehicle.make} {vehicle.model}
                     </h3>
                     {vehicle.engine && (
-                      <p className="text-sm text-secondary-500 mt-1">Engine: {vehicle.engine}</p>
+                      <p className="text-sm text-chrome-400 mt-1">Engine: {vehicle.engine}</p>
                     )}
                     {vehicle.vin && (
-                      <p className="text-xs text-secondary-400 mt-1 font-mono">VIN: {vehicle.vin}</p>
+                      <p className="text-xs text-chrome-500 mt-1 font-mono">VIN: {vehicle.vin}</p>
                     )}
                     {vehicle.notes && (
-                      <p className="text-sm text-secondary-500 mt-2">{vehicle.notes}</p>
+                      <p className="text-sm text-chrome-400 mt-2">{vehicle.notes}</p>
                     )}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleOpenModal(vehicle)}
-                    className="p-2 text-secondary-400 hover:text-secondary-600 hover:bg-secondary-100 rounded-lg transition-colors"
+                    className="p-2 text-chrome-500 hover:text-chrome-300 hover:bg-chrome-900 rounded-lg transition-colors"
                   >
                     <Edit className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(vehicle.id)}
-                    className="p-2 text-secondary-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 text-chrome-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -284,7 +284,7 @@ const VehiclesPage: React.FC = () => {
             placeholder="Vehicle Identification Number"
           />
           <div>
-            <label className="block text-sm font-medium text-secondary-700 mb-1">
+            <label className="block text-sm font-medium text-chrome-300 mb-1">
               Notes (Optional)
             </label>
             <textarea
@@ -292,7 +292,7 @@ const VehiclesPage: React.FC = () => {
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               rows={3}
               placeholder="Any additional details about your vehicle"
-              className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-3 border border-chrome-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
             />
           </div>
           <div className="flex justify-end gap-3 pt-4">

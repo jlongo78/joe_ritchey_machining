@@ -194,10 +194,10 @@ const DashboardPage: React.FC = () => {
     <div className="space-y-6">
       {/* Welcome Header */}
       <div>
-        <h1 className="text-2xl font-bold text-secondary-900">
+        <h1 className="text-2xl font-bold text-chrome-100">
           Welcome back, {user?.firstName}!
         </h1>
-        <p className="text-secondary-500 mt-1">
+        <p className="text-chrome-400 mt-1">
           Here&apos;s an overview of your account activity.
         </p>
       </div>
@@ -209,8 +209,8 @@ const DashboardPage: React.FC = () => {
             <Package className="h-6 w-6 text-blue-600" />
           </div>
           <div>
-            <p className="text-sm text-secondary-500">Pending Orders</p>
-            <p className="text-2xl font-bold text-secondary-900">{stats.pendingOrders}</p>
+            <p className="text-sm text-chrome-400">Pending Orders</p>
+            <p className="text-2xl font-bold text-chrome-100">{stats.pendingOrders}</p>
           </div>
         </Card>
 
@@ -219,8 +219,8 @@ const DashboardPage: React.FC = () => {
             <Wrench className="h-6 w-6 text-green-600" />
           </div>
           <div>
-            <p className="text-sm text-secondary-500">Active Jobs</p>
-            <p className="text-2xl font-bold text-secondary-900">{stats.activeJobs}</p>
+            <p className="text-sm text-chrome-400">Active Jobs</p>
+            <p className="text-2xl font-bold text-chrome-100">{stats.activeJobs}</p>
           </div>
         </Card>
 
@@ -229,8 +229,8 @@ const DashboardPage: React.FC = () => {
             <CreditCard className="h-6 w-6 text-yellow-600" />
           </div>
           <div>
-            <p className="text-sm text-secondary-500">Pending Invoices</p>
-            <p className="text-2xl font-bold text-secondary-900">{stats.pendingInvoices}</p>
+            <p className="text-sm text-chrome-400">Pending Invoices</p>
+            <p className="text-2xl font-bold text-chrome-100">{stats.pendingInvoices}</p>
           </div>
         </Card>
 
@@ -239,8 +239,8 @@ const DashboardPage: React.FC = () => {
             <FileText className="h-6 w-6 text-primary-600" />
           </div>
           <div>
-            <p className="text-sm text-secondary-500">Total Spent</p>
-            <p className="text-2xl font-bold text-secondary-900">{formatPrice(stats.totalSpent)}</p>
+            <p className="text-sm text-chrome-400">Total Spent</p>
+            <p className="text-2xl font-bold text-chrome-100">{formatPrice(stats.totalSpent)}</p>
           </div>
         </Card>
       </div>
@@ -250,7 +250,7 @@ const DashboardPage: React.FC = () => {
         {/* Recent Orders */}
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-secondary-900">Recent Orders</h2>
+            <h2 className="text-lg font-semibold text-chrome-100">Recent Orders</h2>
             <Link to="/account/orders" className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1">
               View All <ArrowRight className="h-4 w-4" />
             </Link>
@@ -262,17 +262,17 @@ const DashboardPage: React.FC = () => {
                 <Link
                   key={order.id}
                   to={`/account/orders/${order.id}`}
-                  className="flex items-center justify-between p-3 bg-secondary-50 rounded-lg hover:bg-secondary-100 transition-colors"
+                  className="flex items-center justify-between p-3 bg-black rounded-lg hover:bg-chrome-900 transition-colors"
                 >
                   <div>
-                    <p className="font-medium text-secondary-900">{order.orderNumber}</p>
-                    <p className="text-sm text-secondary-500">{formatDate(order.createdAt)}</p>
+                    <p className="font-medium text-chrome-100">{order.orderNumber}</p>
+                    <p className="text-sm text-chrome-400">{formatDate(order.createdAt)}</p>
                   </div>
                   <div className="text-right">
                     <Badge variant={getOrderStatusColor(order.status)}>
                       {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                     </Badge>
-                    <p className="text-sm font-medium text-secondary-900 mt-1">
+                    <p className="text-sm font-medium text-chrome-100 mt-1">
                       {formatPrice(order.total)}
                     </p>
                   </div>
@@ -280,7 +280,7 @@ const DashboardPage: React.FC = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-8 text-secondary-500">
+            <div className="text-center py-8 text-chrome-400">
               <Package className="h-12 w-12 mx-auto mb-2 opacity-50" />
               <p>No recent orders</p>
               <Link to="/shop" className="text-primary-600 hover:text-primary-700 text-sm">
@@ -293,7 +293,7 @@ const DashboardPage: React.FC = () => {
         {/* Active Jobs */}
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-secondary-900">Active Jobs</h2>
+            <h2 className="text-lg font-semibold text-chrome-100">Active Jobs</h2>
             <Link to="/account/jobs" className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1">
               View All <ArrowRight className="h-4 w-4" />
             </Link>
@@ -305,18 +305,18 @@ const DashboardPage: React.FC = () => {
                 <Link
                   key={job.id}
                   to={`/account/jobs/${job.id}`}
-                  className="flex items-center justify-between p-3 bg-secondary-50 rounded-lg hover:bg-secondary-100 transition-colors"
+                  className="flex items-center justify-between p-3 bg-black rounded-lg hover:bg-chrome-900 transition-colors"
                 >
                   <div>
-                    <p className="font-medium text-secondary-900">{job.jobNumber}</p>
-                    <p className="text-sm text-secondary-500 line-clamp-1">{job.description}</p>
+                    <p className="font-medium text-chrome-100">{job.jobNumber}</p>
+                    <p className="text-sm text-chrome-400 line-clamp-1">{job.description}</p>
                   </div>
                   <div className="text-right">
                     <Badge variant={getJobStatusColor(job.status)}>
                       {job.status.replace('_', ' ').charAt(0).toUpperCase() + job.status.replace('_', ' ').slice(1)}
                     </Badge>
                     {job.scheduledEndDate && (
-                      <p className="text-xs text-secondary-500 mt-1 flex items-center justify-end gap-1">
+                      <p className="text-xs text-chrome-400 mt-1 flex items-center justify-end gap-1">
                         <Clock className="h-3 w-3" />
                         Est. {formatDate(job.scheduledEndDate)}
                       </p>
@@ -326,7 +326,7 @@ const DashboardPage: React.FC = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-8 text-secondary-500">
+            <div className="text-center py-8 text-chrome-400">
               <Wrench className="h-12 w-12 mx-auto mb-2 opacity-50" />
               <p>No active jobs</p>
               <Link to="/services/request" className="text-primary-600 hover:text-primary-700 text-sm">
@@ -341,7 +341,7 @@ const DashboardPage: React.FC = () => {
       {pendingInvoices.length > 0 && (
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-secondary-900">Pending Invoices</h2>
+            <h2 className="text-lg font-semibold text-chrome-100">Pending Invoices</h2>
             <Link to="/account/invoices" className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1">
               View All <ArrowRight className="h-4 w-4" />
             </Link>
@@ -350,7 +350,7 @@ const DashboardPage: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="text-left text-sm text-secondary-500 border-b border-secondary-200">
+                <tr className="text-left text-sm text-chrome-400 border-b border-chrome-700">
                   <th className="pb-3 font-medium">Invoice</th>
                   <th className="pb-3 font-medium">Amount Due</th>
                   <th className="pb-3 font-medium">Due Date</th>
@@ -362,15 +362,15 @@ const DashboardPage: React.FC = () => {
                 {pendingInvoices.map((invoice) => {
                   const isOverdue = new Date(invoice.dueDate) < new Date();
                   return (
-                    <tr key={invoice.id} className="border-b border-secondary-100">
-                      <td className="py-4 font-medium text-secondary-900">
+                    <tr key={invoice.id} className="border-b border-chrome-800">
+                      <td className="py-4 font-medium text-chrome-100">
                         {invoice.invoiceNumber}
                       </td>
-                      <td className="py-4 font-semibold text-secondary-900">
+                      <td className="py-4 font-semibold text-chrome-100">
                         {formatPrice(invoice.balanceDue)}
                       </td>
                       <td className="py-4">
-                        <span className={isOverdue ? 'text-red-600' : 'text-secondary-600'}>
+                        <span className={isOverdue ? 'text-red-600' : 'text-chrome-300'}>
                           {formatDate(invoice.dueDate)}
                           {isOverdue && (
                             <AlertCircle className="h-4 w-4 inline ml-1" />
@@ -398,7 +398,7 @@ const DashboardPage: React.FC = () => {
 
       {/* Quick Actions */}
       <Card>
-        <h2 className="text-lg font-semibold text-secondary-900 mb-4">Quick Actions</h2>
+        <h2 className="text-lg font-semibold text-chrome-100 mb-4">Quick Actions</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Link to="/shop">
             <Button variant="outline" className="w-full" leftIcon={<Package className="h-4 w-4" />}>

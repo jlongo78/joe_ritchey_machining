@@ -125,7 +125,7 @@ const OrdersPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-secondary-900">Parts Orders</h1>
+        <h1 className="text-2xl font-bold text-chrome-100">Parts Orders</h1>
         <Link to="/shop">
           <Button size="sm" leftIcon={<Package className="h-4 w-4" />}>
             Shop Parts
@@ -162,19 +162,19 @@ const OrdersPage: React.FC = () => {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="font-semibold text-secondary-900">{order.orderNumber}</h3>
+                    <h3 className="font-semibold text-chrome-100">{order.orderNumber}</h3>
                     <Badge variant={getStatusColor(order.status)}>
                       {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                     </Badge>
                   </div>
-                  <p className="text-sm text-secondary-500">
+                  <p className="text-sm text-chrome-400">
                     Placed on {formatDate(order.createdAt)}
                   </p>
-                  <p className="text-sm text-secondary-600 mt-1">
+                  <p className="text-sm text-chrome-300 mt-1">
                     {order.items.length} item{order.items.length !== 1 ? 's' : ''} - {formatPrice(order.total)}
                   </p>
                   {order.trackingNumber && (
-                    <p className="text-sm text-secondary-500 mt-1">
+                    <p className="text-sm text-chrome-400 mt-1">
                       Tracking: <span className="font-mono">{order.trackingNumber}</span>
                     </p>
                   )}
@@ -189,23 +189,23 @@ const OrdersPage: React.FC = () => {
               </div>
 
               {/* Order Items Preview */}
-              <div className="mt-4 pt-4 border-t border-secondary-200">
+              <div className="mt-4 pt-4 border-t border-chrome-700">
                 <div className="flex flex-wrap gap-4">
                   {order.items.slice(0, 3).map((item) => (
                     <div key={item.id} className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center">
-                        <Package className="h-6 w-6 text-secondary-400" />
+                      <div className="w-12 h-12 bg-chrome-900 rounded-lg flex items-center justify-center">
+                        <Package className="h-6 w-6 text-chrome-500" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-secondary-900 line-clamp-1">
+                        <p className="text-sm font-medium text-chrome-100 line-clamp-1">
                           {item.name}
                         </p>
-                        <p className="text-xs text-secondary-500">Qty: {item.quantity}</p>
+                        <p className="text-xs text-chrome-400">Qty: {item.quantity}</p>
                       </div>
                     </div>
                   ))}
                   {order.items.length > 3 && (
-                    <div className="flex items-center text-sm text-secondary-500">
+                    <div className="flex items-center text-sm text-chrome-400">
                       +{order.items.length - 3} more items
                     </div>
                   )}

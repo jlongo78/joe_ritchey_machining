@@ -67,9 +67,9 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
         onClick={handleDecrement}
         disabled={disabled || value <= min}
         className={cn(
-          'flex items-center justify-center rounded-l-lg border border-r-0 border-secondary-300',
-          'bg-secondary-50 text-secondary-600 hover:bg-secondary-100',
-          'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-secondary-50',
+          'flex items-center justify-center rounded-l-lg border border-r-0 border-chrome-600',
+          'bg-chrome-900 text-chrome-300 hover:bg-chrome-800',
+          'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-chrome-900',
           'transition-colors',
           sizeConfig.button
         )}
@@ -85,9 +85,9 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
         min={min}
         max={max}
         className={cn(
-          'border-y border-secondary-300 text-center font-medium text-secondary-900',
+          'border-y border-chrome-600 text-center font-medium text-chrome-100',
           'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
-          'disabled:bg-secondary-50 disabled:text-secondary-500',
+          'disabled:bg-chrome-900 disabled:text-chrome-400',
           '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
           sizeConfig.input
         )}
@@ -98,9 +98,9 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
         onClick={handleIncrement}
         disabled={disabled || value >= max}
         className={cn(
-          'flex items-center justify-center rounded-r-lg border border-l-0 border-secondary-300',
-          'bg-secondary-50 text-secondary-600 hover:bg-secondary-100',
-          'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-secondary-50',
+          'flex items-center justify-center rounded-r-lg border border-l-0 border-chrome-600',
+          'bg-chrome-900 text-chrome-300 hover:bg-chrome-800',
+          'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-chrome-900',
           'transition-colors',
           sizeConfig.button
         )}
