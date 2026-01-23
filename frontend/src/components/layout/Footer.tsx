@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
               <img
                 src={logo}
                 alt="Precision Engine & Dyno"
-                className="h-28 w-auto"
+                className="h-36 w-auto"
               />
             </Link>
             <p className="text-chrome-400 mb-6 max-w-sm">

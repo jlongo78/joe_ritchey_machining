@@ -87,13 +87,13 @@ const Header: React.FC = () => {
 
       {/* Main Header */}
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20 lg:h-28">
+        <div className="flex items-center justify-between h-24 lg:h-36">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
             <img
               src={logo}
               alt="Precision Engine & Dyno"
-              className="h-16 lg:h-24 w-auto"
+              className="h-20 lg:h-32 w-auto"
             />
           </Link>
 
